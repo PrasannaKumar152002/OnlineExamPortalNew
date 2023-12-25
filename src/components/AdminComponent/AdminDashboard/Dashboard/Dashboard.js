@@ -1,5 +1,3 @@
-import style from "./Dashboard.module.css";
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

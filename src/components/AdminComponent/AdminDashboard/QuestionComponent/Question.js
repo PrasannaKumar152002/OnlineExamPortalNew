@@ -4,28 +4,95 @@ import Table from "react-bootstrap/Table";
 // import axios from "axios";
 
 import { useEffect, useState } from "react";
+import QuestionForm from "../Dashboard/Form/QuestionForm";
+import QuestionModalSample from "../../../Modal/Edit/QuestionModalSample";
 
 function Question() {
   const [questions, setQuestions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [setEnum, getEnum] = useState([]);
-  const [quesType, setQuesType] = useState("Choose ONE");
-  const [topicChange, setTopicChange] = useState("Choose ONE");
-  // const [prevColor, setColor] = useState("red");
-
-  // const [exams, setExams] = useState([]);
+  const [quesType, setQuesType] = useState();
+  const [topicChange, setTopicChange] = useState("");
+  const [changedquestionDetail, setQuestionDetail] = useState("");
+  const [changedoptionA, setChangedOptionA] = useState("");
+  const [changedoptionB, setChangedOptionB] = useState("");
+  const [changedoptionC, setChangedOptionC] = useState("");
+  const [changedoptionD, setChangedOptionD] = useState("");
+  const [changedoptionE, setChangedOptionE] = useState("");
+  const [changedanswer, setChangedAnswer] = useState("");
+  const [changednumAnswers, setChangedNumAnswers] = useState("");
+  const [changeddifficultyLevel, setChangeddifficultyLevel] = useState("");
+  const [changedanswerValue, setChangedanswerValue] = useState("");
+  const [changednegativeMarkValue, setChangednegativeMarkValue] = useState("");
 
   useEffect(() => {
     fetchQuestions();
     fetchTopics();
     fetchQuesType();
   }, []);
+
+  const changeQuestionDetailHandler = (e) => {
+    setQuestionDetail(e.target.value);
+  };
+
+  const changeOptionAHandler = (e) => {
+    setChangedOptionA(e.target.value);
+    console.log("A"+ e.target.value)
+  };
+
+  const changeOptionBHandler = (e) => {
+    setChangedOptionB(e.target.value);
+  };
+
+  const changeOptionCHandler = (e) => {
+    setChangedOptionC(e.target.value);
+  };
+
+  const changeOptionDHandler = (e) => {
+    setChangedOptionD(e.target.value);
+  };
+
+  const changeOptionEHandler = (e) => {
+    setChangedOptionE(e.target.value);
+  };
+
+  const changeAnswerHandler = (e) => {
+    setChangedAnswer(e.target.value);
+  };
+
+  const changeNumAnswersHandler = (e) => {
+    setChangedNumAnswers(e.target.value);
+  };
+
+  const changedifficultyLevelHandler = (e) => {
+    setChangeddifficultyLevel(e.target.value);
+  };
+
+  const changeanswerValueHandler = (e) => {
+    setChangedanswerValue(e.target.value);
+  };
+
+  const changenegativeMarkHandler = (e) => {
+    setChangednegativeMarkValue(e.target.value);
+  };
+
+  const handleSelectQuesTypeChange = (e) => {
+    setQuesType(e.enumId);
+    console.log("-----------------------------------------" + e.enumId);
+    // setColor(e.target.value === "Choose ONE" ? "red" : "black");
+  };
+
+  const handleSelectTopicChange = (e) => {
+    setTopicChange(e.topicId);
+    console.log(e.topicId);
+  };
+
   const fetchTopics = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
+        "https://localhost:8443/onlineexam/control/FetchTopicMaster",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -35,7 +102,7 @@ function Question() {
       const data = await response.json();
       console.log(data);
       var list = data.TopicMaster;
-      setTopics([...list]);
+      setTopics(list);
     } catch (error) {
       console.log(error);
     }
@@ -46,9 +113,9 @@ function Question() {
   const fetchQuesType = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/OnlineExamPortal/control/FetchEnumerationEntity",
+        "https://localhost:8443/onlineexam/control/FetchEnumerationEntity",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -58,7 +125,7 @@ function Question() {
       const data = await response.json();
       console.log(data);
       var list = data.EnumerationData;
-      getEnum([...list]);
+      getEnum(list);
     } catch (error) {
       console.log(error);
     }
@@ -66,23 +133,16 @@ function Question() {
   console.log("''''''''''''''''''''''''''''''''''''''");
   console.log(setEnum);
 
-  const handleSelectQuesTypeChange = (e) => {
-    setQuesType(e.target.value);
-    // setColor(e.target.value === "Choose ONE" ? "red" : "black");
-  };
-
-  const handleSelectTopicChange = (e) => {
-    setTopicChange(e.target.value);
-  };
+  
 
   // --------------------Adding Exam And re-render Exam component-----------------
 
   const fetchQuestions = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/OnlineExamPortal/control/FetchQuestionMaster",
+        "https://localhost:8443/onlineexam/control/FetchQuestionMaster",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -119,7 +179,7 @@ function Question() {
     const formData = new FormData(form);
     const data_map = {
       questionDetail: formData.get("questionDetail"),
-      optionA: formData.get("optionA"),
+      optionA: changedoptionA,
       optionB: formData.get("optionB"),
       optionC: formData.get("optionC"),
       optionD: formData.get("optionD"),
@@ -133,6 +193,7 @@ function Question() {
       negativeMarkValue: formData.get("negativeMarkValue"),
     };
     console.log(data_map);
+    console.log("Question:" + data_map.questionType);
     if (data_map.questionDetail === "") {
       document.getElementById("questiondetailerr").style.display = "block";
     } else {
@@ -173,7 +234,7 @@ function Question() {
     } else {
       document.getElementById("numanserr").style.display = "none";
     }
-    if (data_map.questionType === "Choose ONE") {
+    if (data_map.questionType === "") {
       document.getElementById("questiontypeerr").style.display = "block";
     } else {
       document.getElementById("questiontypeerr").style.display = "none";
@@ -188,7 +249,7 @@ function Question() {
     } else {
       document.getElementById("answervalueerr").style.display = "none";
     }
-    if (data_map.topicId === "Choose ONE") {
+    if (data_map.topicId === "") {
       document.getElementById("topiciderr").style.display = "block";
     } else {
       document.getElementById("topiciderr").style.display = "none";
@@ -203,10 +264,10 @@ function Question() {
         data_map.questionDetail === "" ||
         data_map.answer === "" ||
         data_map.numAnswers === "" ||
-        data_map.questionType === "Choose ONE" ||
+        data_map.questionType === "" ||
         data_map.difficultyLevel === "" ||
         data_map.answerValue === "" ||
-        data_map.topicId === "Choose ONE" ||
+        data_map.topicId === "" ||
         data_map.negativeMarkValue === ""
       )
     ) {
@@ -228,7 +289,7 @@ function Question() {
       try {
         // FETCH
         fetch(
-          "https://localhost:8443/OnlineExamPortal/control/CreateQuestionMaster",
+          "https://localhost:8443/onlineexam/control/CreateQuestionMaster",
           {
             method: "POST",
             credentials: "include",
@@ -250,24 +311,6 @@ function Question() {
       }
     }
   };
-  const searchresult=()=>{
-    let list=[];
-    questions.filter((question)=>question.QuestionType==document.getElementById("search").value).map((question)=>{list.push(question)})
-    if(list!=null)
-    {
-      return list
-    }
-    return questions
-  }
-  const callBack=()=>{
-    fetchQuestions();
-    return questions;
-  }
-  const Search=()=>{
-    console.log("Value : "+typeof(document.getElementById("search").value))
-    var result=document.getElementById("search").value!==""?searchresult():callBack();
-    setQuestions(result);
-  }
   return (
     <>
       <div>
@@ -276,21 +319,18 @@ function Question() {
           <input
             className="form-control me-2"
             type="search"
-            placeholder="Search with Question Type"
+            placeholder="Search"
             aria-label="Search"
-            id="search"
           />
-          <button className=" ml-2 btn btn-outline-success" type="button" onClick={()=>{
-           Search();
-          }}>
+          <button className="btn btn-outline-success" type="submit">
             Search
           </button>
         </form>
       </div>
 
       <div>
-        <Table responsive className="table table-bordered border-dark table-striped table-hover ">
-          <thead className="table-light custom-table">
+        <Table responsive className="table-borderless">
+          <thead>
             <tr>
               <th>Question ID</th>
               <th>Questions</th>
@@ -300,12 +340,13 @@ function Question() {
               <th>Option B</th>
               <th>Option C</th>
               <th>Option D</th>
-              <th>OptionE</th>
+              <th>Option E</th>
               <th>No.Of.Answers</th>
-              {/* <th>Difficulty Level</th> */}
+              <th>Difficulty Level</th>
               <th>Answer</th>
-              {/* <th>Negative Mark Value</th>
-              <th>Answer Value</th> */}
+              <th>Negative Mark Value</th>
+              <th>Answer Value</th>
+              <th>Edit</th>
               {/* <th scope="col">Subject Name</th> */}
             </tr>
           </thead>
@@ -316,17 +357,70 @@ function Question() {
                   <td>{question.questionId}</td>
                   <td>{question.questionDetail}</td>
                   <td>{question.topicId}</td>
-                  <td>{question.QuestionType}</td>
+                  <td>{question.questionType}</td>
                   <td>{question.optionA}</td>
                   <td>{question.optionB}</td>
                   <td>{question.optionC}</td>
                   <td>{question.optionD}</td>
                   <td>{question.optionE}</td>
                   <td>{question.numAnswers}</td>
-                  {/* <td>{question.difficultyLevel}</td> */}
+                  <td>{question.difficultyLevel}</td>
                   <td>{question.answer}</td>
-                  {/* <td>{question.negativeMarkValue}</td>
-                  <td>{question.answerValue}</td> */}
+                  <td>{question.negativeMarkValue}</td>
+                  <td>{question.answerValue}</td>
+                  <td className="border-none px-3 py-1 mt-4 mb-2 text-white rounded-0">
+                    <QuestionModalSample
+                      buttonName="UPDATE"
+                      fetchQuestions={fetchQuestions}
+                      fetchId={question.questionId}
+                      Enumkey={i}
+                      Queskey={question.topicId}
+                      questionDetail={question.questionDetail}
+                      topicChange={topicChange}
+                      questionType={question.questionType}
+                      topicId={question.topicId}
+                      optionA={question.optionA}
+                      optionB={question.optionB}
+                      optionC={question.optionC}
+                      optionD={question.optionD}
+                      optionE={question.optionE}
+                      numAnswers={question.numAnswers}
+                      difficultyLevel={question.difficultyLevel}
+                      answer={question.answer}
+                      answerValue={question.answerValue}
+                      negativeMarkValue={question.negativeMarkValue}
+                      setEnum={setEnum}
+                      topics={topics}
+                      submitHandler={submitHandler}
+                      handleSelectQuesTypeChange={handleSelectQuesTypeChange}
+                      quesType={quesType}
+                      handleSelectTopicChange={handleSelectTopicChange}
+                      changedquestionDetail={changedquestionDetail}
+                      changedoptionA={changedoptionA}
+                      changedoptionB={changedoptionB}
+                      changedoptionC={changedoptionC}
+                      changedoptionD={changedoptionD}
+                      changedoptionE={changedoptionE}
+                      changedanswer={changedanswer}
+                      changednumAnswers={changednumAnswers}
+                      changeddifficultyLevel={changeddifficultyLevel}
+                      changedanswerValue={changedanswerValue}
+                      changednegativeMarkValue={changednegativeMarkValue}
+                      changeQuestionDetailHandler={changeQuestionDetailHandler}
+                      changeOptionAHandler={changeOptionAHandler}
+                      changeOptionBHandler={changeOptionBHandler}
+                      changeOptionCHandler={changeOptionCHandler}
+                      changeOptionDHandler={changeOptionDHandler}
+                      changeOptionEHandler={changeOptionEHandler}
+                      changeAnswerHandler={changeAnswerHandler}
+                      changeNumAnswersHandler={changeNumAnswersHandler}
+                      changedifficultyLevelHandler={
+                        changedifficultyLevelHandler
+                      }
+                      changeanswerValueHandler={changeanswerValueHandler}
+                      changenegativeMarkHandler={changenegativeMarkHandler}
+                    />
+                  </td>
                 </tr>
               );
             })}
@@ -349,378 +443,41 @@ function Question() {
       </div>
       <div style={display} className="mt-3">
         <div className="d-flex justify-content-center min-vh-2 text-black">
-          <form
-            onSubmit={submitHandler}
-            className="min-vw-50 p-4 rounded-1"
-            style={{ background: "#D9EBFF" }}
-            id="question"
-          >
-            <div className="container">
-              <div className="row">
-                <div className="col-12 row mt-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="questionDetail"
-                    className="col-sm-2 mt-3"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Question Detail
-                  </label>
-                  <div className="col-12">
-                    <textarea
-                      name="questionDetail"
-                      className="form-control"
-                    ></textarea>
-                    <div
-                      className="invalid-feedback mx-sm-5"
-                      id="questiondetailerr"
-                    >
-                      Please Enter Question Detail
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="optionA"
-                    className="col-sm-1 mt-3"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Option A
-                  </label>
-                  <div className="col-auto">
-                    <textarea
-                      type="text"
-                      name="optionA"
-                      className="form-control mx-sm-5"
-                    ></textarea>
-                    <div className="invalid-feedback mx-sm-5" id="optionaerr">
-                      Please Enter Option A
-                    </div>
-                  </div>
-                </div>
-                <div className="col-6 row mt-3 ms-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="optionB"
-                    className="col-sm-1 mt-2"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Option B
-                  </label>
-                  <div className="col-auto">
-                    <textarea
-                      type="text"
-                      name="optionB"
-                      className="form-control mx-sm-5"
-                    ></textarea>
-                    <div className="invalid-feedback mx-sm-5" id="optionberr">
-                      Please Enter Option B
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="optionC"
-                    className="col-sm-1 mt-3"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Option C
-                  </label>
-                  <div className="col-auto">
-                    <textarea
-                      type="text"
-                      name="optionC"
-                      className="form-control mx-sm-5"
-                    ></textarea>
-                    <div className="invalid-feedback mx-sm-5" id="optioncerr">
-                      Please Enter Option C
-                    </div>
-                  </div>
-                </div>
-                <div className="col-6 row mt-3 ms-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="optionD"
-                    className="col-sm-1 mt-2"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Option D
-                  </label>
-                  <div className="col-auto">
-                    <textarea
-                      type="text"
-                      name="optionD"
-                      className="form-control mx-sm-5"
-                    ></textarea>
-                    <div className="invalid-feedback mx-sm-5" id="optionderr">
-                      Please Enter Option D
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="optionE"
-                    className="col-sm-1 mt-3"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Option E
-                  </label>
-                  <div className="col-auto">
-                    <textarea
-                      type="text"
-                      name="optionE"
-                      className="form-control mx-sm-5"
-                    ></textarea>
-                    <div className="invalid-feedback mx-sm-5" id="optioneerr">
-                      Please Enter Option E
-                    </div>
-                  </div>
-                </div>
-                <div className="col-6 row mt-3 ms-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="answer"
-                    className="col-sm-1 mt-2"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Answer
-                  </label>
-                  <div className="col-auto">
-                    <textarea
-                      type="text"
-                      name="answer"
-                      className="form-control mx-sm-5"
-                    ></textarea>
-                    <div className="invalid-feedback mx-sm-5" id="answererr">
-                      Please Enter Answer
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="numAnswers"
-                    className="col-sm-1 mt-3"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Num Of Answers
-                  </label>
-                  <div className="col-auto">
-                    <input
-                      type="text"
-                      name="numAnswers"
-                      className="form-control mx-sm-5"
-                    />
-                    <div className="invalid-feedback mx-sm-5" id="numanserr">
-                      Please Enter Num Of Answers
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-6 row mt-3 d-flex align-items-center justify-content-center ms-3">
-                  <label
-                    htmlFor="questionType"
-                    className="col-sm-1 mt-2"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Question Type
-                  </label>
-                  <div className="col-md-9">
-                    <select
-                      className="form-select form-select-sm form-control mx-sm-5 p-2"
-                      aria-label=".form-select-sm example"
-                      onChange={handleSelectQuesTypeChange}
-                      value={quesType}
-                      // style={{ color: prevColor }}
-                    >
-                      <option
-                        // key="Choose ONE"
-                        label="Choose ONE"
-                        // style={{color:"red"}}
-                        value="Choose ONE"
-                        name="choose"
-                        // style={{ color: prevColor }}
-                        className="col-6"
-                      ></option>
-                      {setEnum.map((enumdata) => {
-                        return (
-                          <option
-                            key={enumdata.enumId}
-                            label={enumdata.description}
-                            value={enumdata.enumId}
-                            // style={{color:"black"}}
-                          >
-                            {/* {exam.examName} */}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    <div
-                      className="invalid-feedback mx-sm-5"
-                      id="questiontypeerr"
-                    >
-                      Please Enter Question Type
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="difficultyLevel"
-                    className="col-sm-1 mt-3"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Difficulty Level
-                  </label>
-                  <div className="col-auto">
-                    <input
-                      type="text"
-                      name="difficultyLevel"
-                      className="form-control mx-sm-5"
-                    />
-                    <div
-                      className="invalid-feedback mx-sm-5"
-                      id="difficultylevelerr"
-                    >
-                      Please Enter Difficulty Level
-                    </div>
-                  </div>
-                </div>
-                <div className="col-6 row mt-3 ms-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="answerValue"
-                    className="col-sm-1 mt-2"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Answer Value
-                  </label>
-                  <div className="col-auto">
-                    <input
-                      type="text"
-                      name="answerValue"
-                      className="form-control mx-sm-5"
-                    />
-                    <div
-                      className="invalid-feedback mx-sm-5"
-                      id="answervalueerr"
-                    >
-                      Please Enter Answer Value
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="topicId"
-                    className="col-sm-1 mt-2"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Topic Name
-                  </label>
-                  <div className="col-md-9">
-                    <select
-                      className="form-select form-select form-control mx-sm-5 col-auto"
-                      aria-label=".form-select-sm example"
-                      onChange={handleSelectTopicChange}
-                      value={topicChange}
-                      // style={{ color: prevColor }}
-                    >
-                      <option
-                        // key="Choose ONE"
-                        label="Choose ONE"
-                        // style={{color:"red"}}
-                        value="Choose ONE"
-                        name="choose"
-                        // style={{ color: prevColor }}
-                        className="col-6"
-                      ></option>
-                      {topics.map((topic) => {
-                        return (
-                          <option
-                            key={topic.topicId}
-                            label={topic.topicName}
-                            value={topic.topicId}
-                            // style={{color:"black"}}
-                          >
-                            {/* {exam.examName} */}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    <div className="invalid-feedback mx-sm-5" id="topiciderr">
-                      Please Choose Topic ID
-                    </div>
-                  </div>
-                </div>
-                <div className="col-6 row mt-3 ms-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="negativeMarkValue"
-                    className="col-sm-1 mt-2"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Negative Mark Value
-                  </label>
-                  <div className="col-auto">
-                    <input
-                      type="text"
-                      name="negativeMarkValue"
-                      className="form-control mx-sm-5"
-                    />
-                    <div
-                      className="invalid-feedback mx-sm-5"
-                      id="negativemarkvalueeerr"
-                    >
-                      Please Enter Negative Mark Value
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="mx-auto d-flex justify-content-between"
-              style={{ width: "200px" }}
-            >
-              <input
-                type="submit"
-                name="submit"
-                value="ADD"
-                className="border-none px-3 py-1 mt-4 mb-2 text-white"
-                style={{
-                  fontWeight: "bolder",
-                  background:
-                    "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
-                }}
-              />
-              <button
-                onClick={handleCloseQuestion}
-                style={{
-                  fontWeight: "bolder",
-                  background:
-                    "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
-                }}
-                className="border-none px-3 py-1 mt-4 mb-2 text-white"
-              >
-                Close
-              </button>
-            </div>
-          </form>
+          <QuestionForm
+          fetchQuestions={fetchQuestions}
+            buttonName="CREATE"
+            submitHandler={submitHandler}
+            handleSelectQuesTypeChange={handleSelectQuesTypeChange}
+            quesType={quesType}
+            setEnum={setEnum}
+            handleSelectTopicChange={handleSelectTopicChange}
+            topicChange={topicChange}
+            topics={topics}
+            handleCloseQuestion={handleCloseQuestion}
+            changedquestionDetail={changedquestionDetail}
+            changedoptionA={changedoptionA}
+            changedoptionB={changedoptionB}
+            changedoptionC={changedoptionC}
+            changedoptionD={changedoptionD}
+            changedoptionE={changedoptionE}
+            changedanswer={changedanswer}
+            changednumAnswers={changednumAnswers}
+            changeddifficultyLevel={changeddifficultyLevel}
+            changedanswerValue={changedanswerValue}
+            changednegativeMarkValue={changednegativeMarkValue}
+            changeQuestionDetailHandler={changeQuestionDetailHandler}
+            changeOptionAHandler={changeOptionAHandler}
+            changeOptionBHandler={changeOptionBHandler}
+            changeOptionCHandler={changeOptionCHandler}
+            changeOptionDHandler={changeOptionDHandler}
+            changeOptionEHandler={changeOptionEHandler}
+            changeAnswerHandler={changeAnswerHandler}
+            changeNumAnswersHandler={changeNumAnswersHandler}
+            changedifficultyLevelHandler={changedifficultyLevelHandler}
+            changeanswerValueHandler={changeanswerValueHandler}
+            changenegativeMarkHandler={changenegativeMarkHandler}
+            // topicId={question.topicId}
+          />
         </div>
       </div>
     </>

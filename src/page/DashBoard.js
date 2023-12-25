@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Dashboard = () => {
-  const url = "https://localhost:8443/OnlineExamPortal/control/examInfo";
+  const url = "https://localhost:8443/onlineexam/control/examInfo";
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const requestBody = { userLoginId: "pras1542002@gmail.com" };

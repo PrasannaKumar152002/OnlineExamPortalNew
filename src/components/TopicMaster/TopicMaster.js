@@ -17,7 +17,7 @@ export default function TopicMaster() {
   // const fetchTopicMaster = async () => {
   //   try {
   //     const response = await fetch(
-  //       'https://localhost:8443/OnlineExamPortal/control/FetchTopicMasterEvent',
+  //       'https://localhost:8443/onlineexam/control/FetchTopicMasterEvent',
   //       {
   //         method: 'POST',
   //       }
@@ -58,7 +58,7 @@ export default function TopicMaster() {
     // setData({ topicId: "", topicName: "" });
     // FETCH
     if (!data_map.topicName) {
-      fetch("https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster", {
+      fetch("https://localhost:8443/onlineexam/control/ITopicMasterEvent", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -202,9 +202,9 @@ export default function TopicMaster() {
   );
 }
 
-// "https://localhost:8443/OnlineExamPortal/control/TopicMasterEvent"
+// "https://localhost:8443/onlineexam/control/TopicMasterEvent"
 
-// fetch(`https://localhost:8443/OnlineExamPortal/control/FetchTopicMasterEvent`,
+// fetch(`https://localhost:8443/onlineexam/control/FetchTopicMasterEvent`,
 //     {
 //       method: "POST",
 //     }).then((data)=>{

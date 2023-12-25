@@ -17,7 +17,8 @@ function App() {
   }
   return (
     <div className="App">
-      {state=="login"?<SignIn rolestate={rolestate}/>:(state=="admin"?<Admin rolestate={()=>{rolestate("admin")}}/>:<UserPage/>)}
+      <Admin/>
+      {/* {state=="login"?<SignIn rolestate={rolestate}/>:(state=="admin"?<Admin rolestate={()=>{rolestate("admin")}}/>:<UserPage/>)} */}
     </div>
   );
 }

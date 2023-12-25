@@ -22,14 +22,8 @@ export default function TopicForm(props) {
             name="topicName"
             // value={props.topicName}
             className="form-control mx-sm-3"
-            placeholder={props.topicName}
-            // onChange={changeHandler}
-            validation={{
-              required: {
-                value: true,
-                message: "required",
-              },
-            }}
+            defaultValue={props.topicName}
+            onChange={(value)=>props.changeHandler(value)}
           />
           <div className="invalid-feedback mx-sm-5" id="topicnameerr">
             Please Enter Topic Name
@@ -42,8 +36,7 @@ export default function TopicForm(props) {
       >
         <input
           type="submit"
-          name="submit"
-          value="ADD"
+          value={props.buttonName}
           className="border-none px-3 py-1 mt-4 mb-2 text-white"
           style={{
             fontWeight: "bolder",
@@ -51,7 +44,8 @@ export default function TopicForm(props) {
               "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
           }}
         />
-        <button
+        <input
+        type="button"
           onClick={props.handleCloseAdd}
           style={{
             fontWeight: "bolder",
@@ -59,9 +53,8 @@ export default function TopicForm(props) {
               "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
           }}
           className="border-none px-3 py-1 mt-4 mb-2 text-white"
-        >
-          CLOSE
-        </button>
+          value="CLOSE"
+/>
       </div>
     </form>
   );

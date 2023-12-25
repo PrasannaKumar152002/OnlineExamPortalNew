@@ -9,7 +9,7 @@ function Exam() {
 
   useEffect(() => {
     if (examId) {
-      const apiUrl = "https://localhost:8443/OnlineExamPortal/control/questionInfo";
+      const apiUrl = "https://localhost:8443/onlineexam/control/questionInfo";
       const requestBody = { examId: examId };
 
       fetch(apiUrl, {

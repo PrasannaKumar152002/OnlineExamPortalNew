@@ -1,4 +1,5 @@
 import React from "react";
+import { Combobox } from "react-widgets";
 
 export default function ExamForm(props) {
   return (
@@ -40,7 +41,8 @@ export default function ExamForm(props) {
                   type="text"
                   name="description"
                   className="form-control mx-sm-5"
-                  placeholder={props.description}
+                  defaultValue={props.description}
+                  onChange={(value) => props.changeDescHandler(value)}
                 />
                 <div className="invalid-feedback mx-sm-5" id="descriptionerr">
                   Please Enter Description
@@ -60,7 +62,8 @@ export default function ExamForm(props) {
                   type="text"
                   name="examName"
                   className="form-control mx-sm-5"
-                  placeholder={props.examName}
+                  defaultValue={props.examName}
+                  onChange={(value) => props.changeExamNameHandler(value)}
                 />
                 <div className="invalid-feedback mx-sm-5" id="examnameerr">
                   Please Enter Exam Name
@@ -84,7 +87,9 @@ export default function ExamForm(props) {
                   type="datetime-local"
                   name="creationDate"
                   className="form-control mx-sm-5"
-                  placeholder={props.creationDate}
+                  //   placeholder={props.creationDate}
+                  defaultValue={props.creationDate}
+                  onChange={(value) => props.changeCreateDateHandler(value)}
                 />
                 <div className="invalid-feedback mx-sm-5" id="creationdateerr">
                   Please Choose Creation Date
@@ -104,7 +109,9 @@ export default function ExamForm(props) {
                   type="datetime-local"
                   name="expirationDate"
                   className="form-control mx-sm-5"
-                  placeholder={props.expirationDate}
+                  //   placeholder={props.expirationDate}
+                  defaultValue={props.expirationDate}
+                  onChange={(value) => props.changeExpireDateHandler(value)}
                 />
                 <div
                   className="invalid-feedback mx-sm-5"
@@ -131,7 +138,8 @@ export default function ExamForm(props) {
                   type="text"
                   name="noOfQuestions"
                   className="form-control mx-sm-5"
-                  placeholder={props.noOfQuestions}
+                  defaultValue={props.noOfQuestions}
+                  onChange={(value) => props.changeQuesHandler(value)}
                 />
                 <div className="invalid-feedback mx-sm-5" id="noofquestionserr">
                   Please Enter No Of Questions
@@ -151,7 +159,8 @@ export default function ExamForm(props) {
                   type="text"
                   name="durationMinutes"
                   className="form-control mx-sm-5"
-                  placeholder={props.durationMinutes}
+                  defaultValue={props.durationMinutes}
+                  onChange={(value) => props.changeDurationHandler(value)}
                 />
                 <div
                   className="invalid-feedback mx-sm-5"
@@ -178,7 +187,8 @@ export default function ExamForm(props) {
                   type="text"
                   name="passPercentage"
                   className="form-control mx-sm-5"
-                  placeholder={props.passPercentage}
+                  defaultValue={props.passPercentage}
+                  onChange={(value) => props.changePassPercentHandler(value)}
                 />
                 <div
                   className="invalid-feedback mx-sm-5"
@@ -202,13 +212,14 @@ export default function ExamForm(props) {
                       name="questionsRandomized"
                       className="form-control mx-sm-5"
                     /> */}
-                <div className="form-check form-check-inline mx-sm-5">
+                {/* <div className="form-check form-check-inline mx-sm-5">
                   <input
                     className="form-check-input"
                     type="radio"
                     name="questionsRandomized"
                     id="option1"
-                    value="y"
+                    // value="y"
+                    // value={props.questionsRandomized}
                     defaultChecked
                   />
                   <label
@@ -217,21 +228,38 @@ export default function ExamForm(props) {
                   >
                     Yes
                   </label>
-                </div>
+                </div> */}
                 <div className="form-check form-check-inline mx-sm-5">
-                  <input
+                  {/* <input
                     className="form-check-input"
                     type="radio"
                     name="questionsRandomized"
                     id="option2"
-                    value="n"
+                    // value="n"
+                    value={props.questionsRandomized}
                   />
                   <label
                     className="form-check-label"
                     htmlFor="questionsRandomized"
                   >
                     No
-                  </label>
+                  </label> */}
+                  <Combobox
+                    name="questionsRandomized"
+                    data={props.option}
+                    dataKey="id"
+                    textField="value"
+                    defaultValue={
+                      props.questionsRandomized
+                        ? props.questionsRandomized
+                        : "Yes"
+                    }
+                    // value={props.QuesRandoptions}
+                    onChange={(value) => props.changeQuesRandHandler(value)}
+                    // placeholder={
+                    //   props.questionsRandomized ? props.questionsRandomized : "Yes"
+                    // }
+                  />
                   <div
                     className="invalid-feedback mx-sm-5"
                     id="questionsrandomizederr"
@@ -250,7 +278,7 @@ export default function ExamForm(props) {
           <div className="row">
             <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
               <label
-                htmlFor="enableNegativeMark"
+                // htmlFor="enableNegativeMark"
                 className="col-sm-2 mt-2"
                 style={{ fontWeight: "bolder" }}
               >
@@ -259,13 +287,23 @@ export default function ExamForm(props) {
               <div className="col-auto">
                 <div className="col-auto">
                   <div className="form-check form-check-inline mx-sm-5">
-                    <input
-                      className="form-check-input"
-                      type="radio"
+                    <Combobox
                       name="enableNegativeMark"
-                      id="option1"
-                      value="y"
-                      defaultChecked
+                      data={props.option}
+                      dataKey="id"
+                      textField="value"
+                      defaultValue={
+                        props.enableNegativeMark
+                          ? props.enableNegativeMark
+                          : "Yes"
+                      }
+                      // value={props.NegMarkoptions}
+                      onChange={(value) =>
+                        props.changeEnableNegMarkHandler(value)
+                      }
+                      // placeholder={
+                      //   props.enableNegativeMark ? props.enableNegativeMark : "Yes"
+                      // }
                     />
                     <div
                       className="invalid-feedback mx-sm-5"
@@ -273,59 +311,33 @@ export default function ExamForm(props) {
                     >
                       Please Choose Negative Mark
                     </div>
-                    <label className="form-check-label" htmlFor="answersMust">
-                      Yes
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline mx-sm-5">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="enableNegativeMark"
-                      id="option2"
-                      value="n"
-                    />
-                    <label className="form-check-label" htmlFor="answersMust">
-                      No
-                    </label>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
-              <label
-                htmlFor="answersMust"
-                className="col-sm-2 mt-2"
-                style={{ fontWeight: "bolder" }}
-              >
-                Answers Must
-              </label>
-              <div className="col-auto">
-                <div className="form-check form-check-inline mx-sm-5">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="answersMust"
-                    id="option1"
-                    value="y"
-                    defaultChecked
-                  />
-                  <label className="form-check-label" htmlFor="answersMust">
-                    Yes
-                  </label>
-                </div>
-                <div className="form-check form-check-inline mx-sm-5">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="answersMust"
-                    id="option2"
-                    value="n"
-                  />
-                  <label className="form-check-label" htmlFor="answersMust">
-                    No
-                  </label>
-                </div>
+          </div>
+          <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
+            <label
+              htmlFor="answersMust"
+              className="col-sm-2 mt-2"
+              style={{ fontWeight: "bolder" }}
+            >
+              Answers Must
+            </label>
+            <div className="col-auto">
+              <div className="form-check form-check-inline mx-sm-5">
+                <Combobox
+                  name="answersMust"
+                  data={props.option}
+                  dataKey="id"
+                  textField="value"
+                  defaultValue={props.answersMust ? props.answersMust : "Yes"}
+                  // value={props.AnswerMustoptions}
+                  onChange={(value) => props.changeEnableAnsMustHandler(value)}
+                  // placeholder={
+                  //   props.answersMust ? props.answersMust : "Yes"
+                  // }
+                />
                 <div
                   className="invalid-feedback ms-5"
                   id="answersmusterr"
@@ -352,7 +364,8 @@ export default function ExamForm(props) {
                   type="text"
                   name="negativeMarkValue"
                   className="form-control mx-sm-5"
-                  placeholder={props.negativeMarkValue}
+                  defaultValue={props.negativeMarkValue}
+                  onChange={(value) => props.changeNegMarkHandler(value)}
                 />
                 <div
                   className="invalid-feedback mx-sm-5"
@@ -366,27 +379,26 @@ export default function ExamForm(props) {
               <input
                 type="submit"
                 name="submit"
-                value="CREATE"
+                value={props.buttonName}
                 className="border-none mt-4 mb-2 text-white"
                 style={{
                   fontWeight: "bolder",
                   background:
                     "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
-                  padding: "9px", width:200,marginLeft:860,marginTop:500
+                  padding: "9px",
                 }}
               />
-              <input
-                type="button"
-                value="CLOSE"
-                className="border-none mt-4 mb-2 text-white"
+              <button
                 onClick={props.handleCloseExam}
                 style={{
                   fontWeight: "bolder",
                   background:
                     "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
-                  padding: "9px",width:200,marginLeft:860
                 }}
-              />
+                className="border-none px-3 py-1 mt-4 mb-2 text-white"
+              >
+                CLOSE
+              </button>
             </div>
           </div>
         </div>

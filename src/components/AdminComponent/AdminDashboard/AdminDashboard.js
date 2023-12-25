@@ -1,7 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Subject from "./SubjectComponent/Subject";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import Exam from "./ExamComponent/Exam";
 import Student from "./StudentList/Student/Student";
@@ -13,8 +12,8 @@ import Result from "./ResultComponent/Result";
 import Question from "./QuestionComponent/Question";
 import Dashboard from "./Dashboard/Dashboard";
 import ExamTopicMapping from "./ExamComponent/ExamTopicMapping/ExamTopicMapping";
-import Logo from '../../../components/image/exam3.png';
-import LogOut from "../../../page/LogOut";
+import Logo from "../../../images/logo2.png";
+import Topic from "./SubjectComponent/Topic";
 
 function AdminDashboard() {
   // let history = useNavigate();
@@ -36,7 +35,12 @@ function AdminDashboard() {
         >
           <Container>
             <Navbar.Brand href="#" className="w-100">
-              <img src={Logo} alt="Logo" className="img-fluid" style={{ width: "150px" }} />
+              <img
+                src={Logo}
+                alt="Logo"
+                className="img-fluid"
+                style={{ width: "150px" }}
+              />
             </Navbar.Brand>
             <Navbar.Toggle
               aria-controls="responsive-navbar-nav"
@@ -49,7 +53,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Subject"
-                      style={{ textDecoration: "none",color:"white" }}
+                      style={{ textDecoration: "none" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -72,7 +76,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Exam"
-                      style={{ textDecoration: "none",color:"white" }}
+                      style={{ textDecoration: "none" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -95,7 +99,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Question"
-                      style={{ textDecoration: "none",color:"white" }}
+                      style={{ textDecoration: "none" }}
                       className="nav-link"
                     >
                       <li className="nav-item" role="presentation">
@@ -119,7 +123,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Result"
-                      style={{ textDecoration: "none",color:"white" }}
+                      style={{ textDecoration: "none" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -142,7 +146,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/StudentList"
-                      style={{ textDecoration: "none",color:"white" }}
+                      style={{ textDecoration: "none" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -165,7 +169,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard"
-                      style={{ textDecoration: "none",color:"white" }}
+                      style={{ textDecoration: "none" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -184,9 +188,6 @@ function AdminDashboard() {
                         </span>{" "}
                       </li>
                     </Link>
-                    <Link to="/logout" className='nav-link' style={{textDecoration:"none",color:"white"}}>
-                      <i className='bi bi-power'></i> Logout
-                    </Link>
                   </Nav.Link>
                 </ul>
               </Nav>
@@ -197,11 +198,11 @@ function AdminDashboard() {
           <Routes>
             <Route exact path="/" element={<Dashboard />}></Route>
             <Route exact path="/AdminDashboard" element={<Dashboard />}></Route>
-            <Route path="/logout" element={<LogOut/>} />
+
             <Route
               exact
               path="/AdminDashboard/Subject"
-              element={<Subject />}
+              element={<Topic />}
             ></Route>
             <Route exact path="/AdminDashboard/Exam" element={<Exam />}></Route>
             <Route
