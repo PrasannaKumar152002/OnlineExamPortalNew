@@ -23,7 +23,7 @@ function Question() {
   const fetchTopics = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
+        "https://localhost:8443/onlineExam/control/FetchTopicMaster",
         {
           method: "POST",
           credentials: "include",
@@ -46,7 +46,7 @@ function Question() {
   const fetchQuesType = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/OnlineExamPortal/control/FetchEnumerationEntity",
+        "https://localhost:8443/onlineExam/control/FetchEnumerationEntity",
         {
           method: "POST",
           credentials: "include",
@@ -80,7 +80,7 @@ function Question() {
   const fetchQuestions = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/OnlineExamPortal/control/FetchQuestionMaster",
+        "https://localhost:8443/onlineExam/control/FetchQuestionMaster",
         {
           method: "POST",
           credentials: "include",
@@ -228,7 +228,7 @@ function Question() {
       try {
         // FETCH
         fetch(
-          "https://localhost:8443/OnlineExamPortal/control/CreateQuestionMaster",
+          "https://localhost:8443/onlineExam/control/CreateQuestionMaster",
           {
             method: "POST",
             credentials: "include",
