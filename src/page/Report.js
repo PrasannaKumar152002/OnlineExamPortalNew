@@ -1,5 +1,5 @@
 // Report.js
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../components/user/UserPage';
 
 const Report = () => {
@@ -54,7 +54,7 @@ const Report = () => {
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-        setError('Error fetching data. Please try again.');
+        // setError('Error fetching data. Please try again.');
       });
   };
   return (

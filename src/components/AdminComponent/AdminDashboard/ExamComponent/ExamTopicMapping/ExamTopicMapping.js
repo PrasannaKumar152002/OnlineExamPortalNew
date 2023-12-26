@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import ExamTopicMappingForm from "../../Dashboard/Form/ExamTopicMappingForm";
-import ExamTopicMappingModalSample from "../../../../Modal/Edit/ExamTopicMappingModal";
+import ExamTopicMappingModalSample from "../../Modal/Edit/ExamTopicMappingModal";
 export default function ExamTopicMapping() {
   const [topics, setTopics] = useState([]);
   const [exams, setExams] = useState([]);
@@ -32,7 +32,7 @@ export default function ExamTopicMapping() {
   const fetchTopics = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchTopicMaster",
+        "https://localhost:8443/onlineexam/control/FetchTopicMaster",
         {
           method: "GET",
           credentials: "include",
@@ -55,7 +55,7 @@ export default function ExamTopicMapping() {
   const fetchExam = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchExamMaster",
+        "https://localhost:8443/onlineexam/control/FetchExamMaster",
         {
           method: "GET",
           credentials: "include",
@@ -78,7 +78,7 @@ export default function ExamTopicMapping() {
   const fetchExamTopicMapping = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchExamTopicMapping",
+        "https://localhost:8443/onlineexam/control/FetchExamTopicMapping",
         {
           method: "GET",
           credentials: "include",
@@ -147,7 +147,7 @@ export default function ExamTopicMapping() {
     ) {
       try {
         fetch(
-          "https://localhost:8443/onlineExam/control/CreateExamTopicMapping",
+          "https://localhost:8443/onlineexam/control/CreateExamTopicMapping",
           {
             method: "POST",
             credentials: "include",

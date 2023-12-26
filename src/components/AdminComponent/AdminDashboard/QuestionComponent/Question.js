@@ -5,7 +5,9 @@ import Table from "react-bootstrap/Table";
 
 import { useEffect, useState } from "react";
 import QuestionForm from "../Dashboard/Form/QuestionForm";
-import QuestionModalSample from "../../../Modal/Edit/QuestionModalSample";
+import QuestionModalSample from "../Modal/Edit/QuestionModalSample";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function Question() {
   const [questions, setQuestions] = useState([]);
@@ -37,7 +39,6 @@ function Question() {
 
   const changeOptionAHandler = (e) => {
     setChangedOptionA(e.target.value);
-    console.log("A"+ e.target.value)
   };
 
   const changeOptionBHandler = (e) => {
@@ -78,7 +79,6 @@ function Question() {
 
   const handleSelectQuesTypeChange = (e) => {
     setQuesType(e.enumId);
-    console.log("-----------------------------------------" + e.enumId);
     // setColor(e.target.value === "Choose ONE" ? "red" : "black");
   };
 
@@ -90,7 +90,7 @@ function Question() {
   const fetchTopics = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchTopicMaster",
+        "https://localhost:8443/onlineexam/control/FetchTopicMaster",
         {
           method: "GET",
           credentials: "include",
@@ -113,7 +113,7 @@ function Question() {
   const fetchQuesType = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchEnumerationEntity",
+        "https://localhost:8443/onlineexam/control/FetchEnumerationEntity",
         {
           method: "GET",
           credentials: "include",
@@ -133,14 +133,33 @@ function Question() {
   console.log("''''''''''''''''''''''''''''''''''''''");
   console.log(setEnum);
 
-  
+  const handleDeleteQuestion = async (id) => {
+    try {
+      const data_map = { questionId: id.toString() };
+      const response = await fetch(
+        "https://localhost:8443/onlineexam/control/DeleteQuestionMaster",
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data_map),
+        }
+      );
+      console.log(response);
+      fetchQuestions();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // --------------------Adding Exam And re-render Exam component-----------------
 
   const fetchQuestions = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchQuestionMaster",
+        "https://localhost:8443/onlineexam/control/FetchQuestionMaster",
         {
           method: "GET",
           credentials: "include",
@@ -157,8 +176,6 @@ function Question() {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''");
-  console.log(questions);
 
   const [display, setDisplay] = useState({
     display: "none",
@@ -289,7 +306,7 @@ function Question() {
       try {
         // FETCH
         fetch(
-          "https://localhost:8443/onlineExam/control/CreateQuestionMaster",
+          "https://localhost:8443/onlineexam/control/CreateQuestionMaster",
           {
             method: "POST",
             credentials: "include",
@@ -311,6 +328,51 @@ function Question() {
       }
     }
   };
+
+  if (questions === undefined)
+    return (
+      <>
+        <div>
+          <div className="d-flex justify-content-center min-vh-2 text-black">
+            <QuestionForm
+              fetchQuestions={fetchQuestions}
+              buttonName="CREATE"
+              submitHandler={submitHandler}
+              handleSelectQuesTypeChange={handleSelectQuesTypeChange}
+              quesType={quesType}
+              setEnum={setEnum}
+              handleSelectTopicChange={handleSelectTopicChange}
+              topicChange={topicChange}
+              topics={topics}
+              handleCloseQuestion={handleCloseQuestion}
+              changedquestionDetail={changedquestionDetail}
+              changedoptionA={changedoptionA}
+              changedoptionB={changedoptionB}
+              changedoptionC={changedoptionC}
+              changedoptionD={changedoptionD}
+              changedoptionE={changedoptionE}
+              changedanswer={changedanswer}
+              changednumAnswers={changednumAnswers}
+              changeddifficultyLevel={changeddifficultyLevel}
+              changedanswerValue={changedanswerValue}
+              changednegativeMarkValue={changednegativeMarkValue}
+              changeQuestionDetailHandler={changeQuestionDetailHandler}
+              changeOptionAHandler={changeOptionAHandler}
+              changeOptionBHandler={changeOptionBHandler}
+              changeOptionCHandler={changeOptionCHandler}
+              changeOptionDHandler={changeOptionDHandler}
+              changeOptionEHandler={changeOptionEHandler}
+              changeAnswerHandler={changeAnswerHandler}
+              changeNumAnswersHandler={changeNumAnswersHandler}
+              changedifficultyLevelHandler={changedifficultyLevelHandler}
+              changeanswerValueHandler={changeanswerValueHandler}
+              changenegativeMarkHandler={changenegativeMarkHandler}
+              // topicId={question.topicId}
+            />
+          </div>
+        </div>
+      </>
+    );
   return (
     <>
       <div>
@@ -329,7 +391,7 @@ function Question() {
       </div>
 
       <div>
-        <Table responsive className="table-borderless">
+        <Table responsive className="table-borderless question-hide">
           <thead>
             <tr>
               <th>Question ID</th>
@@ -347,6 +409,7 @@ function Question() {
               <th>Negative Mark Value</th>
               <th>Answer Value</th>
               <th>Edit</th>
+              <th>Delete</th>
               {/* <th scope="col">Subject Name</th> */}
             </tr>
           </thead>
@@ -421,6 +484,13 @@ function Question() {
                       changenegativeMarkHandler={changenegativeMarkHandler}
                     />
                   </td>
+                  <td>
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      style={{ color: "red", cursor: "pointer" }}
+                      onClick={() => handleDeleteQuestion(question.questionId)}
+                    />
+                  </td>
                 </tr>
               );
             })}
@@ -444,7 +514,7 @@ function Question() {
       <div style={display} className="mt-3">
         <div className="d-flex justify-content-center min-vh-2 text-black">
           <QuestionForm
-          fetchQuestions={fetchQuestions}
+            fetchQuestions={fetchQuestions}
             buttonName="CREATE"
             submitHandler={submitHandler}
             handleSelectQuesTypeChange={handleSelectQuesTypeChange}
