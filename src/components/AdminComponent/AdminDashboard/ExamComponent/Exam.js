@@ -112,7 +112,7 @@ function Exam() {
   const fetchExam = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchExamMaster",
+        "https://localhost:8443/OnlineExamPortal/control/FetchExamMaster",
         {
           method: "POST",
           credentials: "include",
@@ -275,7 +275,7 @@ function Exam() {
       )
     ) {
       // FETCH
-      fetch("https://localhost:8443/onlineExam/control/CreateExamMaster", {
+      fetch("https://localhost:8443/OnlineExamPortal/control/CreateExamMaster", {
         method: "POST",
         credentials: "include",
         headers: {

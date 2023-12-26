@@ -79,7 +79,7 @@ function Field({ change, title, rolestate }) {
     var login = (add) => {
         setLoading(true);
         console.log("entered loginserver", add);
-        fetch('https://localhost:8443/onlineExam/control/Validate', {
+        fetch('https://localhost:8443/OnlineExamPortal/control/Validate', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -180,7 +180,7 @@ function Field({ change, title, rolestate }) {
     }
     return (
         <div className='container-fluid'>
-            {loading ? <img style={{ marginLeft: 280 }} src='loading.gif' /> : (
+            {loading ? <img style={{ marginLeft: 280,height:550 }} src='loading.gif' /> : (
                 <form className='mx-auto field' id='accesspanel' onSubmit={loginandvalidation} >
                     <h4 className='text-center'>{title}</h4>
                     <div className="mb-3 mt-5">

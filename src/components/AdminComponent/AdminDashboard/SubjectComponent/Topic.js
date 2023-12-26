@@ -38,7 +38,7 @@ function Topic() {
     } else {
       try {
         document.getElementById("topicnameerr").style.display = "none";
-        fetch("https://localhost:8443/onlineexam/control/CreateTopicMaster", {
+        fetch("https://localhost:8443/OnlineExamPortal/control/CreateTopicMaster", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -75,9 +75,9 @@ function Topic() {
   const fetchTopics = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineexam/control/FetchTopicMaster",
+        "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
         {
-          method: "GET",
+          method: "POST",
           credentials: "include",
         }
       );
@@ -96,12 +96,16 @@ function Topic() {
   console.log(topics);
 
   const handleDeleteTopic = async (id) => {
+    const data_map={
+      topicId:id,
+    }
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineexam/control/DeleteTopicMaster",
+        "https://localhost:8443/OnlineExamPortal/control/DeleteTopicMaster",
         {
           method: "DELETE",
           credentials: "include",
+          
         }
       );
       if (!response.ok) {
@@ -109,23 +113,25 @@ function Topic() {
       }
       const data = await response.json();
       console.log(data);
-      var list = data.TopicMaster;
-      setTopics((prevList) => [prevList, ...list]);
+      // var list = data.TopicMaster;
+      // setTopics((prevList) => [prevList, ...list]);
     } catch (error) {
       console.log(error);
     }
   };
 
-  if (topics.length === 0)
+  if (topics === undefined)
     return (
       <>
         <div>
           <div className="d-flex justify-content-center min-vh-2 text-black">
-            <TopicForm
-              buttonName="CREATE"
+          <TopicForm
               type="submit"
+              buttonName="CREATE"
               submitHandler={createSubmitHandler}
               handleCloseAdd={handleCloseAdd}
+              changedTopic={changedTopic}
+              changeHandler={changeHandler}
             />
           </div>
         </div>

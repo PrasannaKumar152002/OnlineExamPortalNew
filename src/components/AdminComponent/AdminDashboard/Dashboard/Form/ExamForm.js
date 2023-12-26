@@ -256,9 +256,9 @@ export default function ExamForm(props) {
                     }
                     // value={props.QuesRandoptions}
                     onChange={(value) => props.changeQuesRandHandler(value)}
-                    // placeholder={
-                    //   props.questionsRandomized ? props.questionsRandomized : "Yes"
-                    // }
+                  // placeholder={
+                  //   props.questionsRandomized ? props.questionsRandomized : "Yes"
+                  // }
                   />
                   <div
                     className="invalid-feedback mx-sm-5"
@@ -301,9 +301,9 @@ export default function ExamForm(props) {
                       onChange={(value) =>
                         props.changeEnableNegMarkHandler(value)
                       }
-                      // placeholder={
-                      //   props.enableNegativeMark ? props.enableNegativeMark : "Yes"
-                      // }
+                    // placeholder={
+                    //   props.enableNegativeMark ? props.enableNegativeMark : "Yes"
+                    // }
                     />
                     <div
                       className="invalid-feedback mx-sm-5"
@@ -334,9 +334,9 @@ export default function ExamForm(props) {
                   defaultValue={props.answersMust ? props.answersMust : "Yes"}
                   // value={props.AnswerMustoptions}
                   onChange={(value) => props.changeEnableAnsMustHandler(value)}
-                  // placeholder={
-                  //   props.answersMust ? props.answersMust : "Yes"
-                  // }
+                // placeholder={
+                //   props.answersMust ? props.answersMust : "Yes"
+                // }
                 />
                 <div
                   className="invalid-feedback ms-5"
@@ -374,32 +374,35 @@ export default function ExamForm(props) {
                   Please Enter Negative Mark Value
                 </div>
               </div>
+              <div className="d-flex">
+              <div className="row mx-auto d-flex" style={{ width: "300px" }}>
+                <input
+                  type="submit"
+                  name="submit"
+                  value={props.buttonName}
+                  className="border-none mt-4 mb-2 text-white col-2"
+                  style={{
+                    fontWeight: "bolder",
+                    background:
+                      "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
+                    padding: "9px",
+                  }}
+                />
+                <button
+                  onClick={props.handleCloseExam}
+                  style={{
+                    fontWeight: "bolder",
+                    background:
+                      "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
+                  }}
+                  className="border-none px-3 py-1 mt-4 mb-2 text-white col-2"
+                >
+                  CLOSE
+                </button>
+              </div>
             </div>
-            <div className="row mx-auto d-flex" style={{ width: "300px" }}>
-              <input
-                type="submit"
-                name="submit"
-                value={props.buttonName}
-                className="border-none mt-4 mb-2 text-white"
-                style={{
-                  fontWeight: "bolder",
-                  background:
-                    "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
-                  padding: "9px",
-                }}
-              />
-              <button
-                onClick={props.handleCloseExam}
-                style={{
-                  fontWeight: "bolder",
-                  background:
-                    "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
-                }}
-                className="border-none px-3 py-1 mt-4 mb-2 text-white"
-              >
-                CLOSE
-              </button>
             </div>
+            
           </div>
         </div>
       </form>

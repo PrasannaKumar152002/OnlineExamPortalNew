@@ -12,7 +12,7 @@ import Result from "./ResultComponent/Result";
 import Question from "./QuestionComponent/Question";
 import Dashboard from "./Dashboard/Dashboard";
 import ExamTopicMapping from "./ExamComponent/ExamTopicMapping/ExamTopicMapping";
-import Logo from "../../../images/logo2.png";
+import Logo from "../../../components/image/exam3.png";
 import Topic from "./SubjectComponent/Topic";
 
 function AdminDashboard() {
@@ -53,7 +53,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Subject"
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", color : "white" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -76,7 +76,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Exam"
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", color : "white" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -99,7 +99,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Question"
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", color : "white" }}
                       className="nav-link"
                     >
                       <li className="nav-item" role="presentation">
@@ -123,7 +123,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Result"
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", color : "white" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -146,7 +146,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/StudentList"
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", color : "white" }}
                       className="nav-link"
                     >
                       <li role="presentation">
@@ -169,7 +169,7 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard"
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", color : "white" }}
                       className="nav-link"
                     >
                       <li role="presentation">

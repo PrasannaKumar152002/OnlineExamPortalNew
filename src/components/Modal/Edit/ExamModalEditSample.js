@@ -128,7 +128,7 @@ function ExamModalEditSample(props) {
       )
     ) {
       // FETCH
-      fetch("https://localhost:8443/onlineexam/control/UpdateExamMaster", {
+      fetch("https://localhost:8443/OnlineExamPortal/control/UpdateExamMaster", {
         method: "PUT",
         credentials: "include",
         headers: {

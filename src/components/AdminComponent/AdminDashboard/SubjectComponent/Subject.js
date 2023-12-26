@@ -39,7 +39,7 @@ function Subject() {
     } else {
       try {
         document.getElementById("topicnameerr").style.display = "none";
-        fetch("https://localhost:8443/onlineExam/control/CreateTopicMaster", {
+        fetch("https://localhost:8443/OnlineExamPortal/control/CreateTopicMaster", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -76,7 +76,7 @@ function Subject() {
   const fetchTopics = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchTopicMaster",
+        "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
         {
           method: "POST",
           credentials: "include",
@@ -100,7 +100,7 @@ function Subject() {
   const handleEditTopic = async (topic) => {
     // try {
     //   const response = await fetch(
-    //     "https://localhost:8443/onlineExam/control/UpdateTopicMaster",
+    //     "https://localhost:8443/OnlineExamPortal/control/UpdateTopicMaster",
     //     {
     //       method: "PUT",
     //       credentials: "include",
@@ -125,7 +125,7 @@ function Subject() {
   const handleDeleteTopic = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchTopicMaster",
+        "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
         {
           method: "POST",
           credentials: "include",
@@ -151,7 +151,7 @@ function Subject() {
   // const fetchTopicMaster = async () => {
   //   try {
   //     const response = await fetch(
-  //       "https://localhost:8443/onlineExam/control/FetchTopicMasterEvent",
+  //       "https://localhost:8443/OnlineExamPortal/control/FetchTopicMasterEvent",
   //       {
   //         method: "POST",
   //       }

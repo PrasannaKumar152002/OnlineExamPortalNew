@@ -90,9 +90,9 @@ function Question() {
   const fetchTopics = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchTopicMaster",
+        "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
         {
-          method: "GET",
+          method: "POST",
           credentials: "include",
         }
       );
@@ -113,9 +113,9 @@ function Question() {
   const fetchQuesType = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchEnumerationEntity",
+        "https://localhost:8443/OnlineExamPortal/control/FetchEnumerationEntity",
         {
-          method: "GET",
+          method: "POST",
           credentials: "include",
         }
       );
@@ -140,9 +140,9 @@ function Question() {
   const fetchQuestions = async () => {
     try {
       const response = await fetch(
-        "https://localhost:8443/onlineExam/control/FetchQuestionMaster",
+        "https://localhost:8443/OnlineExamPortal/control/FetchQuestionMaster",
         {
-          method: "GET",
+          method: "POST",
           credentials: "include",
         }
       );
@@ -289,7 +289,7 @@ function Question() {
       try {
         // FETCH
         fetch(
-          "https://localhost:8443/onlineExam/control/CreateQuestionMaster",
+          "https://localhost:8443/OnlineExamPortal/control/CreateQuestionMaster",
           {
             method: "POST",
             credentials: "include",
@@ -311,6 +311,49 @@ function Question() {
       }
     }
   };
+
+  if(questions===undefined)
+  {
+    return (
+      <>
+      <QuestionForm
+          fetchQuestions={fetchQuestions}
+            buttonName="CREATE"
+            submitHandler={submitHandler}
+            handleSelectQuesTypeChange={handleSelectQuesTypeChange}
+            quesType={quesType}
+            setEnum={setEnum}
+            handleSelectTopicChange={handleSelectTopicChange}
+            topicChange={topicChange}
+            topics={topics}
+            handleCloseQuestion={handleCloseQuestion}
+            changedquestionDetail={changedquestionDetail}
+            changedoptionA={changedoptionA}
+            changedoptionB={changedoptionB}
+            changedoptionC={changedoptionC}
+            changedoptionD={changedoptionD}
+            changedoptionE={changedoptionE}
+            changedanswer={changedanswer}
+            changednumAnswers={changednumAnswers}
+            changeddifficultyLevel={changeddifficultyLevel}
+            changedanswerValue={changedanswerValue}
+            changednegativeMarkValue={changednegativeMarkValue}
+            changeQuestionDetailHandler={changeQuestionDetailHandler}
+            changeOptionAHandler={changeOptionAHandler}
+            changeOptionBHandler={changeOptionBHandler}
+            changeOptionCHandler={changeOptionCHandler}
+            changeOptionDHandler={changeOptionDHandler}
+            changeOptionEHandler={changeOptionEHandler}
+            changeAnswerHandler={changeAnswerHandler}
+            changeNumAnswersHandler={changeNumAnswersHandler}
+            changedifficultyLevelHandler={changedifficultyLevelHandler}
+            changeanswerValueHandler={changeanswerValueHandler}
+            changenegativeMarkHandler={changenegativeMarkHandler}
+                        // topicId={question.topicId}
+          />
+      </>
+    )
+  }
   return (
     <>
       <div>
