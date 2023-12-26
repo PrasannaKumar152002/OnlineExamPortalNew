@@ -140,7 +140,7 @@ function Register({ change, title }) {
 
         }).then(response => response.json()).then(data => {
             console.log(data.result);
-            if (data.result == "error") {
+            if (data.result === "error") {
                 // element.innerHTML = "Incorrect Email or Password";
                 Swal.fire({
                     icon: "error",
@@ -150,7 +150,7 @@ function Register({ change, title }) {
                 });
                 // alert("Incorrect Email or Password");
             }
-            else if (data.result == "HelperError") {
+            else if (data.result === "HelperError") {
 
                 if (data.username != undefined && data.password != undefined) {
                     Swal.fire({

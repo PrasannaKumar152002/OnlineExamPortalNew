@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Table from "react-bootstrap/Table";
 import ExamForm from "../Dashboard/Form/ExamForm";
-import ExamModalEditSample from "../../../Modal/Edit/ExamModalEditSample";
+import ExamModalEditSample from "../Modal/Edit/ExamModalEditSample";
 
 function Exam() {
   //  ---------------------- add Exam & close buttton working  -------------------------------------
@@ -28,11 +28,13 @@ function Exam() {
   const option = [
     {
       id: 0,
-      value: "Yes",
+      // value: "Yes",
+      display:"Y"
     },
     {
       id: 1,
-      value: "No",
+      // value: "No",
+      display:"N"
     },
   ];
 
@@ -53,8 +55,8 @@ function Exam() {
   }, []);
 
   const changeQuesRandHandler = (e) => {
-    setChangedQuesRandoptions(e.value);
-    console.log(e.value);
+    setChangedQuesRandoptions(e.display);
+    console.log(e.display);
   };
 
   const changeNegMarkHandler = (e) => {
@@ -68,13 +70,13 @@ function Exam() {
   };
 
   const changeEnableAnsMustHandler = (e) => {
-    setChangedanswersMust(e.value);
-    console.log(e.value);
+    setChangedanswersMust(e.display);
+    console.log(e.display);
   };
 
   const changeEnableNegMarkHandler = (e) => {
-    setChangedenableNegativeMark(e.value);
-    console.log(e.value);
+    setChangedenableNegativeMark(e.display);
+    console.log(e.display);
   };
 
   const changeQuesHandler = (e) => {
@@ -122,15 +124,14 @@ function Exam() {
         throw new Error();
       }
       const data = await response.json();
-      console.log(data);
       var list = data.ExamMaster;
       setExams(list);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''");
-  console.log(exams);
+  // console.log("''''''''''''''''''''''''''''''''''''''");
+  // console.log(exams);
   // var date = new Date();
   // var d =
   //   date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
@@ -175,10 +176,10 @@ function Exam() {
   //   for (let i = 0; i < questions.length; i++) {
   //     if (parseInt(questions[i].exam_id) === parseInt(id)) {
   //       // console.log(questions[i].id);
-  //       await axios.delete(`http://localhost:3333/question/${questions[i].id}`);
+  //       await axios.delete(http://localhost:3333/question/${questions[i].id});
   //     }
   //   }
-  //   await axios.delete(`http://localhost:3333/exam/${id}`);
+  //   await axios.delete(http://localhost:3333/exam/${id});
   //   setStatusDeleteExam(true);
   // }
 
@@ -204,6 +205,7 @@ function Exam() {
       enableNegativeMark: formData.get("enableNegativeMark"),
       negativeMarkValue: formData.get("negativeMarkValue"),
     };
+    console.log(data_map);
     if (data_map.examName === "") {
       document.getElementById("examnameerr").style.display = "block";
     } else {
@@ -291,8 +293,47 @@ function Exam() {
           fetchExam();
         });
     }
+    form.reset();
   };
 
+  if (exams === undefined || exams.length === 0)
+    return (
+      <>
+        <div>
+          <div className="d-flex justify-content-center min-vh-2 text-black p-5">
+            <ExamForm
+              fetchExam={fetchExam}
+              option={option}
+              changedQuesRandoptions={changedQuesRandoptions}
+              changedpassPercentage={changedpassPercentage}
+              changedexamName={changedexamName}
+              changednoOfQuestions={changednoOfQuestions}
+              changeddurationMinutes={changeddurationMinutes}
+              changedcreationDate={changedcreationDate}
+              changedexpirationDate={changedexpirationDate}
+              changedanswersMust={changedanswersMust}
+              changedDesc={changedDesc}
+              changedenableNegativeMark={changedenableNegativeMark}
+              changednegativeMarkValue={changednegativeMarkValue}
+              changeQuesRandHandler={changeQuesRandHandler}
+              changeNegMarkHandler={changeNegMarkHandler}
+              changePassPercentHandler={changePassPercentHandler}
+              changeEnableAnsMustHandler={changeEnableAnsMustHandler}
+              changeEnableNegMarkHandler={changeEnableNegMarkHandler}
+              changeQuesHandler={changeQuesHandler}
+              changeDurationHandler={changeDurationHandler}
+              changeCreateDateHandler={changeCreateDateHandler}
+              changeExpireDateHandler={changeExpireDateHandler}
+              changeDescHandler={changeDescHandler}
+              changeExamNameHandler={changeExamNameHandler}
+              buttonName="CREATE"
+              submitHandler={submitHandler}
+              handleCloseExam={handleCloseExam}
+            />
+          </div>
+        </div>
+      </>
+    );
   return (
     <>
       <div>
@@ -300,7 +341,7 @@ function Exam() {
       </div>
 
       <div>
-        <Table responsive>
+        <Table responsive className="table-borderless">
           <thead>
             <tr>
               <th>Exam ID</th>
@@ -374,7 +415,7 @@ function Exam() {
                       changeExpireDateHandler={changeExpireDateHandler}
                       changeDescHandler={changeDescHandler}
                       changeExamNameHandler={changeExamNameHandler}
-                      />
+                    />
                   </td>
                 </tr>
               );
@@ -415,30 +456,30 @@ function Exam() {
       <div style={display}>
         <div className="d-flex align-items-center justify-content-center min-vh-100 text-black">
           <ExamForm
-          fetchExam={fetchExam}
-          option={option}
-          changedQuesRandoptions={changedQuesRandoptions}
-          changedpassPercentage={changedpassPercentage}
-          changedexamName={changedexamName}
-          changednoOfQuestions={changednoOfQuestions}
-          changeddurationMinutes={changeddurationMinutes}
-          changedcreationDate={changedcreationDate}
-          changedexpirationDate={changedexpirationDate}
-          changedanswersMust={changedanswersMust}
-          changedDesc={changedDesc}
-          changedenableNegativeMark={changedenableNegativeMark}
-          changednegativeMarkValue={changednegativeMarkValue}
-          changeQuesRandHandler={changeQuesRandHandler}
-          changeNegMarkHandler={changeNegMarkHandler}
-          changePassPercentHandler={changePassPercentHandler}
-          changeEnableAnsMustHandler={changeEnableAnsMustHandler}
-          changeEnableNegMarkHandler={changeEnableNegMarkHandler}
-          changeQuesHandler={changeQuesHandler}
-          changeDurationHandler={changeDurationHandler}
-          changeCreateDateHandler={changeCreateDateHandler}
-          changeExpireDateHandler={changeExpireDateHandler}
-          changeDescHandler={changeDescHandler}
-          changeExamNameHandler={changeExamNameHandler}
+            fetchExam={fetchExam}
+            option={option}
+            changedQuesRandoptions={changedQuesRandoptions}
+            changedpassPercentage={changedpassPercentage}
+            changedexamName={changedexamName}
+            changednoOfQuestions={changednoOfQuestions}
+            changeddurationMinutes={changeddurationMinutes}
+            changedcreationDate={changedcreationDate}
+            changedexpirationDate={changedexpirationDate}
+            changedanswersMust={changedanswersMust}
+            changedDesc={changedDesc}
+            changedenableNegativeMark={changedenableNegativeMark}
+            changednegativeMarkValue={changednegativeMarkValue}
+            changeQuesRandHandler={changeQuesRandHandler}
+            changeNegMarkHandler={changeNegMarkHandler}
+            changePassPercentHandler={changePassPercentHandler}
+            changeEnableAnsMustHandler={changeEnableAnsMustHandler}
+            changeEnableNegMarkHandler={changeEnableNegMarkHandler}
+            changeQuesHandler={changeQuesHandler}
+            changeDurationHandler={changeDurationHandler}
+            changeCreateDateHandler={changeCreateDateHandler}
+            changeExpireDateHandler={changeExpireDateHandler}
+            changeDescHandler={changeDescHandler}
+            changeExamNameHandler={changeExamNameHandler}
             buttonName="CREATE"
             submitHandler={submitHandler}
             handleCloseExam={handleCloseExam}

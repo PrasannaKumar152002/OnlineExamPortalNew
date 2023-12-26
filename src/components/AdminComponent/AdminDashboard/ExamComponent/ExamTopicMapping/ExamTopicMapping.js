@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import ExamTopicMappingForm from "../../Dashboard/Form/ExamTopicMappingForm";
-import ExamTopicMappingModalSample from "../../../../Modal/Edit/ExamTopicMappingModal";
+import ExamTopicMappingModalSample from "../../Modal/Edit/ExamTopicMappingModal";
 export default function ExamTopicMapping() {
   const [topics, setTopics] = useState([]);
   const [exams, setExams] = useState([]);
@@ -26,7 +26,7 @@ export default function ExamTopicMapping() {
     console.log(e.ExamName);
   };
   const handleSelectCountChange = (e) => {
-    setCountChange(e);
+    setCountChange(e.target.value);
     console.log(e);
   };
   const fetchTopics = async () => {
@@ -90,13 +90,15 @@ export default function ExamTopicMapping() {
       const data = await response.json();
       console.log(data);
       var list = data.ExamTopicMapping;
-      setExamTopic(list);
+      setExamTopic([...list]);
     } catch (error) {
       console.log(error);
     }
   };
   console.log("''''''''''''''''''''''''''''''''''''''");
   console.log(exams);
+
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -131,7 +133,7 @@ export default function ExamTopicMapping() {
     } else {
       document.getElementById("topicpasspercentageerr").style.display = "none";
     }
-    if (data_map.questionsPerExam === "Choose Count") {
+    if (data_map.questionsPerExam === "") {
       document.getElementById("questionsperexamerr").style.display = "block";
     } else {
       document.getElementById("questionsperexamerr").style.display = "none";
@@ -184,6 +186,23 @@ export default function ExamTopicMapping() {
   // const handleSelectTChange = (e) => {
   //   setSelectedTopicID(e.target.value);
   // };
+  if (examTopic === undefined) {
+    <div className="d-flex justify-content-center min-vh-2 text-black">
+      <ExamTopicMappingForm
+        topics={topics}
+        submitHandler={submitHandler}
+        examChange={examChange}
+        selectedQuestionsPerExam={selectedQuestionsPerExam}
+        count={count}
+        exams={exams}
+        examId={examTopic.examId}
+        handleSelectTopicChange={handleSelectTopicChange}
+        handleSelectExamChange={handleSelectExamChange}
+        handleSelectCountChange={handleSelectCountChange}
+      />
+    </div>
+  }
+
   return (
     <div>
       <Table responsive>
@@ -196,7 +215,6 @@ export default function ExamTopicMapping() {
             <th>Percentage</th>
             <th>Topic Pass Percentage</th>
             <th>Questions Per Exam</th>
-            <th>Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -210,24 +228,6 @@ export default function ExamTopicMapping() {
                 <td>{examtopic.percentage}</td>
                 <td>{examtopic.topicPassPercentage}</td>
                 <td>{examtopic.questionsPerExam}</td>
-                <td className="border-none px-3 py-1 mt-4 mb-2 text-white rounded-0">
-                  <ExamTopicMappingModalSample
-                    examChange={examChange}
-                    topics={topics}
-                    topicId={examtopic.topicId}
-                    exams={exams}
-                    examId={examtopic.examId}
-                    examName={examtopic.examName}
-                    handleSelectTopicChange={handleSelectTopicChange}
-                    handleSelectExamChange={handleSelectExamChange}
-                    topicName={examtopic.topicName}
-                    percentage={examtopic.percentage}
-                    topicPassPercentage={examtopic.topicPassPercentage}
-                    questionsPerExam={examtopic.questionsPerExam}
-                    handleSelectCountChange={handleSelectCountChange}
-                    count={count}
-                  />
-                </td>
               </tr>
             );
           })}

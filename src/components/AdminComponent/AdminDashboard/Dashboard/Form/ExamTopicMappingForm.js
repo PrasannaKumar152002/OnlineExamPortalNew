@@ -113,11 +113,11 @@ export default function ExamTopicMappingForm(props) {
                 Questions Per Exam
               </label>
               <div className="col col-sm-7">
-                <Combobox
-                  data={props.count}
-                  dataKey={props.count}
-                  textField={props.count}
-                  defaultValue={props.count ? props.count : "Choose ONE"}
+                <input
+                  type="text"
+                  name="questionsPerExam"
+                  className="form-control mx-sm-5"
+                  defaultValue={props.count}
                   // value={props.topicChange}
                   onChange={(value) => props.handleSelectCountChange(value)}
                   // placeholder={props.topicId ? props.topicId : "Choose ONE"}

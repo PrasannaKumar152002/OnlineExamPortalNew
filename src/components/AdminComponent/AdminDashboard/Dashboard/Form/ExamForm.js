@@ -248,11 +248,11 @@ export default function ExamForm(props) {
                     name="questionsRandomized"
                     data={props.option}
                     dataKey="id"
-                    textField="value"
+                    textField="display"
                     defaultValue={
                       props.questionsRandomized
                         ? props.questionsRandomized
-                        : "Yes"
+                        : "Y"
                     }
                     // value={props.QuesRandoptions}
                     onChange={(value) => props.changeQuesRandHandler(value)}
@@ -291,11 +291,11 @@ export default function ExamForm(props) {
                       name="enableNegativeMark"
                       data={props.option}
                       dataKey="id"
-                      textField="value"
+                      textField="display"
                       defaultValue={
                         props.enableNegativeMark
                           ? props.enableNegativeMark
-                          : "Yes"
+                          : "Y"
                       }
                       // value={props.NegMarkoptions}
                       onChange={(value) =>
@@ -330,8 +330,8 @@ export default function ExamForm(props) {
                   name="answersMust"
                   data={props.option}
                   dataKey="id"
-                  textField="value"
-                  defaultValue={props.answersMust ? props.answersMust : "Yes"}
+                  textField="display"
+                  defaultValue={props.answersMust ? props.answersMust : "Y"}
                   // value={props.AnswerMustoptions}
                   onChange={(value) => props.changeEnableAnsMustHandler(value)}
                 // placeholder={
@@ -374,35 +374,9 @@ export default function ExamForm(props) {
                   Please Enter Negative Mark Value
                 </div>
               </div>
-              <div className="d-flex">
-              <div className="row mx-auto d-flex" style={{ width: "300px" }}>
-                <input
-                  type="submit"
-                  name="submit"
-                  value={props.buttonName}
-                  className="border-none mt-4 mb-2 text-white col-2"
-                  style={{
-                    fontWeight: "bolder",
-                    background:
-                      "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
-                    padding: "9px",
-                  }}
-                />
-                <button
-                  onClick={props.handleCloseExam}
-                  style={{
-                    fontWeight: "bolder",
-                    background:
-                      "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
-                  }}
-                  className="border-none px-3 py-1 mt-4 mb-2 text-white col-2"
-                >
-                  CLOSE
-                </button>
+              <div>
               </div>
             </div>
-            </div>
-            
           </div>
         </div>
       </form>

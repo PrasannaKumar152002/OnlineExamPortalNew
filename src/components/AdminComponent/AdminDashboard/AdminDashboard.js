@@ -28,7 +28,7 @@ function AdminDashboard() {
         <Navbar
           collapseOnSelect
           expand="lg"
-          className="bg-body-tertiary d-flex justify-content-center mw-100"
+          className="bg-body-tertiary d-flex justify-content-center mw-100" 
           // style={{background: "linearGradient(to top, #09203f 0%, #537895 100%)"}}
           bg="dark"
           data-bs-theme="dark"
@@ -53,8 +53,8 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Subject"
-                      style={{ textDecoration: "none", color : "white" }}
-                      className="nav-link"
+                      style={{ textDecoration: "none" }}
+                      className="nav-link text-light bg-dark"
                     >
                       <li role="presentation">
                         {" "}
@@ -76,8 +76,8 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Exam"
-                      style={{ textDecoration: "none", color : "white" }}
-                      className="nav-link"
+                      style={{ textDecoration: "none" }}
+                      className="nav-link text-light bg-dark"
                     >
                       <li role="presentation">
                         {" "}
@@ -99,8 +99,8 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Question"
-                      style={{ textDecoration: "none", color : "white" }}
-                      className="nav-link"
+                      style={{ textDecoration: "none" }}
+                      className="nav-link text-light bg-dark"
                     >
                       <li className="nav-item" role="presentation">
                         {" "}
@@ -123,8 +123,8 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/Result"
-                      style={{ textDecoration: "none", color : "white" }}
-                      className="nav-link"
+                      style={{ textDecoration: "none" }}
+                      className="nav-link text-light bg-dark"
                     >
                       <li role="presentation">
                         {" "}
@@ -146,8 +146,8 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard/StudentList"
-                      style={{ textDecoration: "none", color : "white" }}
-                      className="nav-link"
+                      style={{ textDecoration: "none" }}
+                      className="nav-link text-light bg-dark"
                     >
                       <li role="presentation">
                         {" "}
@@ -169,8 +169,8 @@ function AdminDashboard() {
                     <Link
                       exact
                       to="/AdminDashboard"
-                      style={{ textDecoration: "none", color : "white" }}
-                      className="nav-link"
+                      style={{ textDecoration: "none" }}
+                      className="nav-link text-light bg-dark"
                     >
                       <li role="presentation">
                         {" "}

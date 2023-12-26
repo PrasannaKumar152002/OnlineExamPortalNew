@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TopicForm from "../Dashboard/Form/TopicForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import TopicModalEditSample from "../../../Modal/Edit/TopicModalEditSample";
+import TopicModalEditSample from "../Modal/Edit/TopicModalEditSample";
 
 function Topic() {
   //  ---------------------- add Subject & close buttton working  -------------------------------------
@@ -56,12 +56,14 @@ function Topic() {
             // console.log(fetch_data.topicName);
             // var addTopic = fetch_data.topicName;
             // setTopics([...topics,addTopic]);
+            console.log(fetch_data);
             fetchTopics();
           });
       } catch (error) {
         console.log(error);
       }
     }
+    form.reset();
   };
   // --------------- Fetching all subjects from db.json file-------------------------
   // const [exams, setExams] = useState([]);
@@ -106,21 +108,19 @@ function Topic() {
           method: "DELETE",
           credentials: "include",
           
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data_map),
         }
       );
-      if (!response.ok) {
-        throw new Error();
-      }
-      const data = await response.json();
-      console.log(data);
-      // var list = data.TopicMaster;
-      // setTopics((prevList) => [prevList, ...list]);
+      console.log(response);
+      fetchTopics();
     } catch (error) {
       console.log(error);
     }
   };
-
-  if (topics === undefined)
+  if (topics === undefined || topics.length === 0)
     return (
       <>
         <div>
@@ -184,7 +184,7 @@ function Topic() {
                         <FontAwesomeIcon
                           icon={faTrash}
                           style={{ color: "red", cursor: "pointer" }}
-                          onClick={()=>handleDeleteTopic(data.topicId)}
+                          onClick={() => handleDeleteTopic(data.topicId)}
                         />
                       </td>
                     </tr>
