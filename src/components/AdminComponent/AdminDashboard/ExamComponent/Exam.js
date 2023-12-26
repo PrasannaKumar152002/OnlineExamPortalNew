@@ -28,11 +28,13 @@ function Exam() {
   const option = [
     {
       id: 0,
-      value: "Yes",
+      // value: "Yes",
+      display:"Y"
     },
     {
       id: 1,
-      value: "No",
+      // value: "No",
+      display:"N"
     },
   ];
 
@@ -53,8 +55,8 @@ function Exam() {
   }, []);
 
   const changeQuesRandHandler = (e) => {
-    setChangedQuesRandoptions(e.value);
-    console.log(e.value);
+    setChangedQuesRandoptions(e.display);
+    console.log(e.display);
   };
 
   const changeNegMarkHandler = (e) => {
@@ -68,13 +70,13 @@ function Exam() {
   };
 
   const changeEnableAnsMustHandler = (e) => {
-    setChangedanswersMust(e.value);
-    console.log(e.value);
+    setChangedanswersMust(e.display);
+    console.log(e.display);
   };
 
   const changeEnableNegMarkHandler = (e) => {
-    setChangedenableNegativeMark(e.value);
-    console.log(e.value);
+    setChangedenableNegativeMark(e.display);
+    console.log(e.display);
   };
 
   const changeQuesHandler = (e) => {
@@ -122,15 +124,14 @@ function Exam() {
         throw new Error();
       }
       const data = await response.json();
-      console.log(data);
       var list = data.ExamMaster;
       setExams(list);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''");
-  console.log(exams);
+  // console.log("''''''''''''''''''''''''''''''''''''''");
+  // console.log(exams);
   // var date = new Date();
   // var d =
   //   date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
@@ -204,6 +205,7 @@ function Exam() {
       enableNegativeMark: formData.get("enableNegativeMark"),
       negativeMarkValue: formData.get("negativeMarkValue"),
     };
+    console.log(data_map);
     if (data_map.examName === "") {
       document.getElementById("examnameerr").style.display = "block";
     } else {
@@ -291,7 +293,7 @@ function Exam() {
           fetchExam();
         });
     }
-    form.reset();
+    // form.reset();
   };
 
   if (exams === undefined)

@@ -248,11 +248,11 @@ export default function ExamForm(props) {
                     name="questionsRandomized"
                     data={props.option}
                     dataKey="id"
-                    textField="value"
+                    textField="display"
                     defaultValue={
                       props.questionsRandomized
                         ? props.questionsRandomized
-                        : "Yes"
+                        : "Y"
                     }
                     // value={props.QuesRandoptions}
                     onChange={(value) => props.changeQuesRandHandler(value)}
@@ -291,11 +291,11 @@ export default function ExamForm(props) {
                       name="enableNegativeMark"
                       data={props.option}
                       dataKey="id"
-                      textField="value"
+                      textField="display"
                       defaultValue={
                         props.enableNegativeMark
                           ? props.enableNegativeMark
-                          : "Yes"
+                          : "Y"
                       }
                       // value={props.NegMarkoptions}
                       onChange={(value) =>
@@ -330,8 +330,8 @@ export default function ExamForm(props) {
                   name="answersMust"
                   data={props.option}
                   dataKey="id"
-                  textField="value"
-                  defaultValue={props.answersMust ? props.answersMust : "Yes"}
+                  textField="display"
+                  defaultValue={props.answersMust ? props.answersMust : "Y"}
                   // value={props.AnswerMustoptions}
                   onChange={(value) => props.changeEnableAnsMustHandler(value)}
                   // placeholder={
