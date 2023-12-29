@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import ExamTopicMappingForm from "../../Dashboard/Form/ExamTopicMappingForm";
-import ExamTopicMappingModalSample from "../../Modal/Edit/ExamTopicMappingModal";
 export default function ExamTopicMapping() {
   const [topics, setTopics] = useState([]);
   const [exams, setExams] = useState([]);
   const [examTopic, setExamTopic] = useState([]);
-  const [selectedQuestionsPerExam, setSelectedQuestionsPerExam] = useState("");
+  const [percentage, setPercentage] = useState();
+  const [selectedQuestionsPerExam, setSelectedQuestionsPerExam] = useState();
   const [topicChange, setTopicChange] = useState("");
   const [examChange, setExamChange] = useState("");
   const [count, setCountChange] = useState();
@@ -16,25 +16,26 @@ export default function ExamTopicMapping() {
     fetchExam();
     fetchExamTopicMapping();
   }, []);
+  
+  const handleChangePercentage = (e) => {
+    setSelectedQuestionsPerExam(e.target.value)
+  }
   const handleSelectTopicChange = (e) => {
-    setTopicChange(e.topicName);
-    console.log(e.topicName);
+    setTopicChange(e.topicId);
   };
 
   const handleSelectExamChange = (e) => {
-    setExamChange(e.ExamName);
-    console.log(e.ExamName);
+    setExamChange(e.examId);
   };
   const handleSelectCountChange = (e) => {
     setCountChange(e.target.value);
-    console.log(e);
   };
   const fetchTopics = async () => {
     try {
       const response = await fetch(
         "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -49,7 +50,6 @@ export default function ExamTopicMapping() {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''********************");
   console.log(topics);
 
   const fetchExam = async () => {
@@ -57,7 +57,7 @@ export default function ExamTopicMapping() {
       const response = await fetch(
         "https://localhost:8443/OnlineExamPortal/control/FetchExamMaster",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -72,7 +72,6 @@ export default function ExamTopicMapping() {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''");
   console.log(exams);
 
   const fetchExamTopicMapping = async () => {
@@ -80,7 +79,7 @@ export default function ExamTopicMapping() {
       const response = await fetch(
         "https://localhost:8443/OnlineExamPortal/control/FetchExamTopicMapping",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -95,7 +94,6 @@ export default function ExamTopicMapping() {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''");
   console.log(exams);
 
 
@@ -107,9 +105,9 @@ export default function ExamTopicMapping() {
     const data_map = {
       examId: examChange,
       topicId: topicChange,
-      percentage: formData.get("percentage"),
+      percentage: percentage,
       topicPassPercentage: formData.get("topicPassPercentage"),
-      questionsPerExam: selectedQuestionsPerExam,
+      questionsPerExam:  selectedQuestionsPerExam,
     };
     console.log(data_map);
 
@@ -144,7 +142,7 @@ export default function ExamTopicMapping() {
         data_map.topicId === "" ||
         data_map.percentage === "" ||
         data_map.topicPassPercentage === "" ||
-        data_map.questionsPerExam === "Choose Count"
+        data_map.questionsPerExam === ""
       )
     ) {
       try {
@@ -170,22 +168,8 @@ export default function ExamTopicMapping() {
         console.log(error);
       }
     }
-    // document.getElementById("examIDerr").style.display = "block";
-    // document.getElementById("topicIDerr").style.display = "block";
-    // document.getElementById("percentageerr").style.display = "block";
-    // document.getElementById("topicpasspercentageerr").style.display = "block";
-    // document.getElementById("questionsperexamerr").style.display = "block";
+    form.reset();
   };
-
-  // const handleSelectQChange = (e) => {
-  //   setSelectedQuestionsPerExam(e.target.value);
-  // };
-  // const handleSelectEChange = (e) => {
-  //   setSelectedExamID(e.target.value);
-  // };
-  // const handleSelectTChange = (e) => {
-  //   setSelectedTopicID(e.target.value);
-  // };
   if (examTopic === undefined) {
     <div className="d-flex justify-content-center min-vh-2 text-black">
       <ExamTopicMappingForm
@@ -199,6 +183,7 @@ export default function ExamTopicMapping() {
         handleSelectTopicChange={handleSelectTopicChange}
         handleSelectExamChange={handleSelectExamChange}
         handleSelectCountChange={handleSelectCountChange}
+        handleChangePercentage={handleChangePercentage}
       />
     </div>
   }
@@ -209,9 +194,7 @@ export default function ExamTopicMapping() {
         <thead>
           <tr>
             <th>Exam ID</th>
-            {/* <th>Exam Name</th> */}
             <th>Topic ID</th>
-            {/* <th>Topic Name</th> */}
             <th>Percentage</th>
             <th>Topic Pass Percentage</th>
             <th>Questions Per Exam</th>
@@ -219,11 +202,9 @@ export default function ExamTopicMapping() {
         </thead>
         <tbody>
           {examTopic.map((examtopic, index) => {
-            // const exam_name = exams[examTopic.examId].examName;
             return (
               <tr key={index}>
                 <td>{examtopic.examId}</td>
-                {/* <td>{exam_name}</td> */}
                 <td>{examtopic.topicId}</td>
                 <td>{examtopic.percentage}</td>
                 <td>{examtopic.topicPassPercentage}</td>
@@ -245,6 +226,7 @@ export default function ExamTopicMapping() {
           handleSelectTopicChange={handleSelectTopicChange}
           handleSelectExamChange={handleSelectExamChange}
           handleSelectCountChange={handleSelectCountChange}
+          handleChangePercentage={handleChangePercentage}
         />
       </div>
     </div>

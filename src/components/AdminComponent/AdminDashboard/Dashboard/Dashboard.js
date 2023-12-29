@@ -1,82 +1,101 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function Dashboard() {
-  const [exam, setExam] = useState([{}]);
-  const [question, setQuestion] = useState("Updating...");
-  const [user, setUser] = useState("Updating...");
+  const [exams, setExams] = useState([]);
+  const [selectedExam, setSelectedExam] = useState(null);
 
   useEffect(() => {
-    // async function getAllExam() {
-    //   let value = await axios.get("http://localhost:3333/exam");
-    //   setExam(value.data);
-    // }
-    // getAllExam();
-
-    // async function getAllQuestions() {
-    //   let value = await axios.get("http://localhost:3333/question");
-    //   setQuestion("We have total " + value.data.length + " question");
-    // }
-    // getAllQuestions();
-
-    // async function getAllUsers() {
-    //   let value = await axios.get("http://localhost:3333/user");
-    //   setUser("We have total " + value.data.length + " user");
-    // }
-    // getAllUsers();
+    fetchExams();
   }, []);
 
-  let history = useNavigate();
+  const fetchExams = async () => {
+    try {
+      const response = await fetch(
+        "https://localhost:8443/OnlineExamPortal/control/FetchExamMaster",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error();
+      }
+      const data = await response.json();
+      var list = data.ExamMaster;
+      setExams(list);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  function showExam() {
-    history("/AdminDashboard/Exam");
-  }
-
-  function showQuestions() {
-    history("/AdminDashboard/Question");
-  }
-
-  function showUsers() {
-    history("/AdminDashboard/StudentList");
-  }
+  const handleViewExam = (examId) => {
+    setSelectedExam(examId === selectedExam ? null : examId);
+  };
 
   return (
     <>
-      {/* <div id={style.displayHeadingBox}>
-        
-      </div> */}
       <h1 align="center">Exam View</h1>
       <div className="m-5">
-  {/* <p id={style.countOfExam}>{exam}</p> */}
-  <div className="container">
-    <div className="row row-cols-1 row-cols-md-3 justify-content-center">
-      {exam.map((data, i) => (
-        <div
-          key={i}
-          className="col mb-4"
-        >
-          <div className="border p-4 m-4 border border-dark d-flex justify-content-center">
-            <div className="text-center">
-              <p className="fw-bolder">{data.exam_name}</p>
-              <p className="fst-italic">{data.exam_date}</p>
-              <div className="mt-3">
-                <button className="fw-bold border p-3 border border-secondary text-light" style={{ backgroundColor: "#00204a" }}>
-                  View Exam
-                </button>
+        <div className="container">
+          <div className="row display-flex justify-content-center">
+            {exams.map((data, i) => (
+              <div
+                key={i}
+                className="col-md-2 border p-4 border-dark d-flex justify-content-center m-2"
+                style={{ boxSizing: "content-box", height: "4in" }}
+              >
+                <div className="row">
+                  <p className="fw-bolder text-center">{data.examName}</p>
+                  <p className="fst-italic text-center">Duration : {data.durationMinutes}mins</p>
+                  <p className="fst-italic text-center">Description : {data.description}</p>
+                  <div className="mt-3 d-flex justify-content-center">
+                    <button
+                      className="fw-bold border p-2 border-secondary text-light w-100 h-100"
+                      style={{ backgroundColor: "#00204a" }}
+                      onClick={() => handleViewExam(data.examId)}
+                    >
+                      View Exam
+                    </button>
+                  </div>
+
+                  {selectedExam === data.examId && (
+                    <div className="accordion mt-3" id={`examAccordion${data.examId}`}>
+                      <div className="accordion-item">
+                        <h2 className="accordion-header" id={`heading${data.examId}`}>
+                          <button
+                            className="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target={`#collapse${data.examId}`}
+                            aria-expanded="true"
+                            aria-controls={`collapse${data.examId}`}
+                          >
+                            Exam Details
+                          </button>
+                        </h2>
+                        <div
+                          id={`collapse${data.examId}`}
+                          className="accordion-collapse collapse show"
+                          aria-labelledby={`heading${data.examId}`}
+                          data-bs-parent={`#examAccordion${data.examId}`}
+                        >
+                          <div className="accordion-body"  style={{ overflowY: "auto", maxHeight: "200px"}}>
+                            <p>{data.creationDate}</p>
+                            <p>{data.expirationDate}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</div>
-
+      </div>
     </>
   );
 }
 
 export default Dashboard;
-
-// align-items-center

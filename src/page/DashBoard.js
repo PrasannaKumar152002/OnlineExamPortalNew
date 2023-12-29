@@ -1,33 +1,43 @@
-import React, { useState, useEffect } from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState, useEffect, useContext } from 'react';
+
 import { NavLink } from 'react-router-dom';
+import { AppContext } from '../components/user/UserPage';
 
 const Dashboard = () => {
   const url = "https://localhost:8443/OnlineExamPortal/control/examInfo";
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  const requestBody = { userLoginId: "kowsi@gmail.com" };
+  const { questions, setQuestions } = useContext(AppContext);
+  setQuestions(null);
+  
+  var user=sessionStorage.getItem("userId"); 
+console.log("=====",user);
+  const requestBody = { userLoginId: user};
 
   const fetchInfo = () => {
-    console.log("inside fetch...");
+    
 
     fetch(url, {
-      method: 'POST',
+      method: "POST",
+      credentials: "include",
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(requestBody),
     })
-      .then((res) => res.json())
-      .then((fetchedData) => {
-        if (fetchedData.exam === undefined) {
-          console.log("PartyId null...");
+      .then((response) => response.json())
+      .then((result) => {
+        
+        if (result.exam === undefined) {
+          
           console.error('Error fetching data:', error);
           setError('Error fetching data. Please try again.');
         } else {
-          console.log(fetchedData.exam.exam);
-          setData(fetchedData.exam.exam);
+          console.log(result.exam.exam);
+          setData(result.exam.exam);
+        
         }
+
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -46,7 +56,7 @@ const Dashboard = () => {
         key={`${exam.examId}`}
         title={`${exam.examName}`}
         content={`ExamId:${(exam.examId)}<br>ExamName: ${(exam.examName)}<br>Time: ${Number(exam.durationMinutes)}min<br>Description: ${exam.description}`}
-        ex={`${exam.examId}`}
+        examId={`${exam.examId}`}
         noOfQuestion={`${exam.noOfQuestions}`}
       />
     );
@@ -68,17 +78,14 @@ const Dashboard = () => {
   );
 };
 const Upda=(props)=>{
-  sessionStorage.setItem("exam", props.ex);
-  console.log("session",props.ex);
+  sessionStorage.setItem("exam", props.examId);
+
   sessionStorage.setItem("ques",props.noOfQuestion);
-  console.log("session",props.noOfQuestion);
+ 
 
 }
 const Card = (props) => {
-  console.log("Entered Card...");
-  console.log("Entered card------" + props.ex);
-  console.log("Entered card------" + props.noOfQuestion);
-
+ 
   return (
     <div className="card border border-dark">
       <div className="card-body" dangerouslySetInnerHTML={{ __html: props.content }} />

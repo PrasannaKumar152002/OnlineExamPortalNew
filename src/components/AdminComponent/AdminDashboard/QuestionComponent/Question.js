@@ -1,8 +1,4 @@
-//    import style from "./Question.module.css";
 import Table from "react-bootstrap/Table";
-
-// import axios from "axios";
-
 import { useEffect, useState } from "react";
 import QuestionForm from "../Dashboard/Form/QuestionForm";
 import QuestionModalSample from "../Modal/Edit/QuestionModalSample";
@@ -13,7 +9,7 @@ function Question() {
   const [questions, setQuestions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [setEnum, getEnum] = useState([]);
-  const [quesType, setQuesType] = useState();
+  const [quesType, setQuesType] = useState("");
   const [topicChange, setTopicChange] = useState("");
   const [changedquestionDetail, setQuestionDetail] = useState("");
   const [changedoptionA, setChangedOptionA] = useState("");
@@ -79,12 +75,10 @@ function Question() {
 
   const handleSelectQuesTypeChange = (e) => {
     setQuesType(e.enumId);
-    // setColor(e.target.value === "Choose ONE" ? "red" : "black");
   };
 
   const handleSelectTopicChange = (e) => {
     setTopicChange(e.topicId);
-    console.log(e.topicId);
   };
 
   const fetchTopics = async () => {
@@ -92,7 +86,7 @@ function Question() {
       const response = await fetch(
         "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -107,7 +101,6 @@ function Question() {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''");
   console.log(topics);
 
   const fetchQuesType = async () => {
@@ -115,7 +108,7 @@ function Question() {
       const response = await fetch(
         "https://localhost:8443/OnlineExamPortal/control/FetchEnumerationEntity",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -130,7 +123,6 @@ function Question() {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''");
   console.log(setEnum);
 
   const handleDeleteQuestion = async (id) => {
@@ -154,14 +146,12 @@ function Question() {
     }
   };
 
-  // --------------------Adding Exam And re-render Exam component-----------------
-
   const fetchQuestions = async () => {
     try {
       const response = await fetch(
         "https://localhost:8443/OnlineExamPortal/control/FetchQuestionMaster",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -186,7 +176,6 @@ function Question() {
   }
 
   function handleCloseQuestion(e) {
-    e.preventDefault();
     setDisplay({ display: "none" });
   }
 
@@ -290,18 +279,23 @@ function Question() {
     ) {
       if (data_map.optionA === "") {
         data_map.optionA = "null";
+        setChangedOptionA('');
       }
       if (data_map.optionB === "") {
         data_map.optionB = "null";
+        setChangedOptionB('');
       }
       if (data_map.optionC === "") {
         data_map.optionC = "null";
+        setChangedOptionC('');
       }
       if (data_map.optionD === "") {
         data_map.optionD = "null";
+        setChangedOptionD('');
       }
       if (data_map.optionE === "") {
         data_map.optionE = "null";
+        setChangedOptionE('');
       }
       try {
         // FETCH
@@ -327,6 +321,8 @@ function Question() {
         console.log(error);
       }
     }
+
+    handleCloseQuestion();
     form.reset();
   };
 
@@ -368,7 +364,6 @@ function Question() {
               changedifficultyLevelHandler={changedifficultyLevelHandler}
               changeanswerValueHandler={changeanswerValueHandler}
               changenegativeMarkHandler={changenegativeMarkHandler}
-              // topicId={question.topicId}
             />
           </div>
         </div>
@@ -411,7 +406,6 @@ function Question() {
               <th>Answer Value</th>
               <th>Edit</th>
               <th>Delete</th>
-              {/* <th scope="col">Subject Name</th> */}
             </tr>
           </thead>
           <tbody>
@@ -547,7 +541,6 @@ function Question() {
             changedifficultyLevelHandler={changedifficultyLevelHandler}
             changeanswerValueHandler={changeanswerValueHandler}
             changenegativeMarkHandler={changenegativeMarkHandler}
-            // topicId={question.topicId}
           />
         </div>
       </div>

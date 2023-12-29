@@ -12,22 +12,6 @@ export default function ExamForm(props) {
       >
         <div className="container">
           <div className="row">
-            {/* <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
-                  <label
-                    htmlFor="examId"
-                    className="col-sm-2 mt-3"
-                    style={{ fontWeight: "bolder" }}
-                  >
-                    Exam ID
-                  </label>
-                  <div className="col-auto">
-                    <input
-                      type="text"
-                      name="examId"
-                      className="form-control mx-sm-5"
-                    />
-                  </div>
-                </div> */}
             <div className="col-6 col-sm-6 row mt-3 d-flex align-items-center justify-content-center">
               <label
                 htmlFor="description"
@@ -87,7 +71,6 @@ export default function ExamForm(props) {
                   type="datetime-local"
                   name="creationDate"
                   className="form-control mx-sm-5"
-                  //   placeholder={props.creationDate}
                   defaultValue={props.creationDate}
                   onChange={(value) => props.changeCreateDateHandler(value)}
                 />
@@ -109,7 +92,6 @@ export default function ExamForm(props) {
                   type="datetime-local"
                   name="expirationDate"
                   className="form-control mx-sm-5"
-                  //   placeholder={props.expirationDate}
                   defaultValue={props.expirationDate}
                   onChange={(value) => props.changeExpireDateHandler(value)}
                 />
@@ -207,43 +189,7 @@ export default function ExamForm(props) {
                 Questions Randomized
               </label>
               <div className="col-auto">
-                {/* <input
-                      type="text"
-                      name="questionsRandomized"
-                      className="form-control mx-sm-5"
-                    /> */}
-                {/* <div className="form-check form-check-inline mx-sm-5">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="questionsRandomized"
-                    id="option1"
-                    // value="y"
-                    // value={props.questionsRandomized}
-                    defaultChecked
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="questionsRandomized"
-                  >
-                    Yes
-                  </label>
-                </div> */}
                 <div className="form-check form-check-inline mx-sm-5">
-                  {/* <input
-                    className="form-check-input"
-                    type="radio"
-                    name="questionsRandomized"
-                    id="option2"
-                    // value="n"
-                    value={props.questionsRandomized}
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="questionsRandomized"
-                  >
-                    No
-                  </label> */}
                   <Combobox
                     name="questionsRandomized"
                     data={props.option}
@@ -254,11 +200,7 @@ export default function ExamForm(props) {
                         ? props.questionsRandomized
                         : "Y"
                     }
-                    // value={props.QuesRandoptions}
                     onChange={(value) => props.changeQuesRandHandler(value)}
-                  // placeholder={
-                  //   props.questionsRandomized ? props.questionsRandomized : "Yes"
-                  // }
                   />
                   <div
                     className="invalid-feedback mx-sm-5"
@@ -278,7 +220,6 @@ export default function ExamForm(props) {
           <div className="row">
             <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
               <label
-                // htmlFor="enableNegativeMark"
                 className="col-sm-2 mt-2"
                 style={{ fontWeight: "bolder" }}
               >
@@ -297,13 +238,9 @@ export default function ExamForm(props) {
                           ? props.enableNegativeMark
                           : "Y"
                       }
-                      // value={props.NegMarkoptions}
                       onChange={(value) =>
                         props.changeEnableNegMarkHandler(value)
                       }
-                    // placeholder={
-                    //   props.enableNegativeMark ? props.enableNegativeMark : "Yes"
-                    // }
                     />
                     <div
                       className="invalid-feedback mx-sm-5"
@@ -332,11 +269,7 @@ export default function ExamForm(props) {
                   dataKey="id"
                   textField="display"
                   defaultValue={props.answersMust ? props.answersMust : "Y"}
-                  // value={props.AnswerMustoptions}
                   onChange={(value) => props.changeEnableAnsMustHandler(value)}
-                // placeholder={
-                //   props.answersMust ? props.answersMust : "Yes"
-                // }
                 />
                 <div
                   className="invalid-feedback ms-5"
@@ -373,6 +306,31 @@ export default function ExamForm(props) {
                 >
                   Please Enter Negative Mark Value
                 </div>
+              </div>
+              <div className="row mx-auto d-flex justify-content-center ml-5">
+                <input
+                  type="submit"
+                  name="submit"
+                  value={props.buttonName}
+                  className="border-none mt-4 mb-2 text-white col-4"
+                  style={{
+                    fontWeight: "bolder",
+                    background:
+                      "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
+                    padding: "9px",
+                  }}
+                />
+                <button
+                  onClick={props.handleCloseExam}
+                  style={{
+                    fontWeight: "bolder",
+                    background:
+                      "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
+                  }}
+                  className="border-none px-3 py-1 mt-4 mb-2 text-white col-4"
+                >
+                  CLOSE
+                </button>
               </div>
               <div>
               </div>

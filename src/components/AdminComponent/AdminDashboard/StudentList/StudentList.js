@@ -1,24 +1,36 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-
 import { Link } from "react-router-dom";
-
-import style from "../SubjectComponent/Subject.module.css";
 
 function StudentList() {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
     async function getAllStudent() {
-      let value = await axios.get("http://localhost:3333/user");
-      setStudents(value.data);
+      try {
+        const response = await fetch(
+          "https://localhost:8443/OnlineExamPortal/control/FetchStudentDetails",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        if (!response.ok) {
+          throw new Error();
+        }
+        const data = await response.json();
+        console.log(data);
+        var list = data.StudentList;
+        setStudents(list);
+      } catch (error) {
+        console.log(error);
+      }
     }
     getAllStudent();
   }, []);
 
   return (
     <>
-      <div id={style.displayHeadingBox}>
+      <div>
         <h2 align="center">Student List</h2>
       </div>
 
@@ -26,50 +38,38 @@ function StudentList() {
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">ID</th>
+              <th scope="col">Party ID</th>
               <th scope="col">User Name</th>
               <th scope="col">User Email</th>
               <th scope="col">Options</th>
             </tr>
           </thead>
           <tbody>
-            {students.map((data, i) => {
+            {students.map((data) => {
               return (
-                <tr key={i}>
-                  <td>{i+1}</td>
-                  <td>{data.user_name}</td>
-                  <td>{data.user_email}</td>
+                <tr key={data.partyId}>
+                  <td id="party">{data.partyId}</td>
+                  <td>{data.userName}</td>
+                  <td>{data.userLoginId}</td>
                   <td>
-                    <Link
-                      exact
-                      to={`/AdminDashboard/StudentList/Details/${data.id}`}
-                    >
-                      <button>Assign Test</button>
-                      <button>View Result</button>
-                    </Link>
+                    <button  variant="link" style={{
+                      fontWeight: "bolder",
+                      background:
+                        "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)",
+                    }}
+                      className="border-none px-3 py-1 mt-4 mb-2 text-white">
+                      <Link
+                        to="/AdminDashboard/StudentList/AddUser" style={{color:"white", textDecoration:"none"}}
+                      >
+                        Assign Test
+                      </Link></button>
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-      </div>
-       {/* <div class="table-responsive">
-  <table class="table">
-  <tr>
-  <td class="table-active">Student List</td>
-
-  <td class="table-primary">Student List</td>
-  <td class="table-secondary">Student List</td>
-  <td class="table-success">Student List</td>
-  <td class="table-danger">Student List</td>
-  <td class="table-warning">Student List</td>
-  <td class="table-info">Student List</td>
-  <td class="table-light">Student List</td>
-  <td class="table-dark">Student List</td>
-</tr>
-  </table>
-</div> */}
+      </div >
     </>
   );
 }

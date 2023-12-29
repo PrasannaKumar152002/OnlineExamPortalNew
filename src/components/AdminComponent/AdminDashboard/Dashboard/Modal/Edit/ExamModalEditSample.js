@@ -12,16 +12,6 @@ function ExamModalEditSample(props) {
   const handleShow = () => setShow(true);
 
   const submitHandler = (e) => {
-    
-    // const inputDateString = "2023-12-28 04:04:00.0";
-
-    // // Split the input string into date and time components
-    // const [datePart, timePart] = inputDateString.split(" ");
-
-    // // Concatenate the date and adjusted time components
-    // const adjustedTimeString = `${datePart}T${timePart.slice(0, 5)}`;
-
-    // console.log(adjustedTimeString); // Output: "2023-12-28T04:04"
 
     e.preventDefault();
     const data_map = {
@@ -137,7 +127,7 @@ function ExamModalEditSample(props) {
         body: JSON.stringify(data_map),
       })
         .then((response) => {
-          return response.json(); //  converts the response object to JSON to info
+          return response.json();
         })
         .then((fetch_data) => {
           console.log(fetch_data);
@@ -159,9 +149,7 @@ function ExamModalEditSample(props) {
         backdrop="static"
         keyboard={false}
         fullscreen={true}
-        // className='w-100'
       >
-        {/*  */}
         <Modal.Header closeButton>
           <Modal.Title>Edit Exam Form</Modal.Title>
         </Modal.Header>
@@ -204,12 +192,6 @@ function ExamModalEditSample(props) {
             negativeMarkValue={props.negativeMarkValue}
           />
         </Modal.Body>
-        {/* <Modal.Footer className='text-center'>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          {/* <Button variant="primary">Understood</Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );

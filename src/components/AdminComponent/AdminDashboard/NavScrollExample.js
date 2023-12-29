@@ -34,7 +34,6 @@ function NavScrollExample() {
                     style={{ textDecoration: "none" }}
                   >
                     {" "}
-                    {/* className="fs-3 */}
                     <li className="nav-item" role="presentation">
                       {" "}
                       <span>Topic </span>

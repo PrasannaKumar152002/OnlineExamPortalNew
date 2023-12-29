@@ -40,7 +40,6 @@ function QuestionModalSample(props) {
         : props.negativeMarkValue.toString(),
     };
     console.log(data_map);
-    console.log("Question:" + data_map.questionType);
     if (data_map.questionDetail === "") {
       document.getElementById("questiondetailerr").style.display = "block";
     } else {
@@ -143,7 +142,7 @@ function QuestionModalSample(props) {
         body: JSON.stringify(data_map),
       })
         .then((response) => {
-          return response.json(); //  converts the response object to JSON to info
+          return response.json();
         })
         .then((fetch_data) => {
           console.log(fetch_data);
@@ -165,9 +164,7 @@ function QuestionModalSample(props) {
         backdrop="static"
         keyboard={false}
         fullscreen={true}
-        // className='w-100'
       >
-        {/*  */}
         <Modal.Header closeButton>
           <Modal.Title>Edit Question Form</Modal.Title>
         </Modal.Header>
@@ -213,12 +210,6 @@ function QuestionModalSample(props) {
             changenegativeMarkHandler={props.changenegativeMarkHandler}
           />
         </Modal.Body>
-        {/* <Modal.Footer className='text-center'>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          {/* <Button variant="primary">Understood</Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );

@@ -32,7 +32,7 @@ function TopicModalEditSample(props) {
           body: JSON.stringify(data_map),
         })
           .then((response) => {
-            return response.json(); //  converts the response object to JSON to info
+            return response.json();
           })
           .then((fetch_data) => {
             console.log("UPDATED");
@@ -42,7 +42,6 @@ function TopicModalEditSample(props) {
         console.log(error);
       }
     }
-    // data_map.topicName === props.topicName ? setShow(show) : setShow(!show);
   };
   return (
     <>
@@ -56,7 +55,6 @@ function TopicModalEditSample(props) {
         backdrop="static"
         keyboard={false}
       >
-        {/*  */}
         <Modal.Header closeButton>
           <Modal.Title>Edit Topic Form</Modal.Title>
         </Modal.Header>
@@ -70,12 +68,6 @@ function TopicModalEditSample(props) {
             changeHandler={props.changeHandler}
           />
         </Modal.Body>
-        {/* <Modal.Footer className='text-center'>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          {/* <Button variant="primary">Understood</Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );

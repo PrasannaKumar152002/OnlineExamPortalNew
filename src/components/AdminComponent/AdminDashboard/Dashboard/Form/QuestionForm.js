@@ -16,7 +16,6 @@ export default function QuestionForm(props) {
   useEffect(() => {
     switch (props.quesType || props.questionType) {
       case "QT_MC":
-        console.log("I'm here");
         showMcq({ display: "block" });
         showTF({ display: "none" });
         showSC({ display: "none" });
@@ -113,8 +112,6 @@ export default function QuestionForm(props) {
             </div>
           </div>
         </div>
-        {/* </div> */}
-        {/* </div> */}
         <div className="container">
           <div className="row">
             <div className="col-6 row mt-3 d-flex align-items-center justify-content-center">
@@ -153,29 +150,11 @@ export default function QuestionForm(props) {
                   data={props.setEnum}
                   dataKey="sequenceId"
                   textField="description"
-                  // defaultValue={0}
-                  // value={props.topicChange}
                   onChange={(value) => props.handleSelectQuesTypeChange(value)}
                   defaultValue={
                     props.questionType ? props.questionType : "Choose ONE"
                   }
-
-                  // placeholder={
-                  //   props.questionType ? props.questionType : "Choose ONE"
-                  // }
-                />
-                {/* <div className="card flex justify-content-center">
-                <Dropdown
-                  value={props.quesType}
-                  onChange={props.handleSelectQuesTypeChange}
-                  // onClick={()=>{alert(props.setEnum.map((data)=>{return<>{data}</>}))}}
-                  options={props.setEnum}
-                  optionLabel="description"
-                  editable
-                  placeholder={props.quesType}
-                  className="w-full md:w-4rem"
-                />
-              </div> */}
+/>
                 <div className="invalid-feedback mx-sm-5" id="questiontypeerr">
                   Please Enter Question Type
                 </div>
@@ -299,49 +278,11 @@ export default function QuestionForm(props) {
                 Topic Name
               </label>
               <div className="col-md-9">
-                {/* <select
-                  className="form-select form-select form-control mx-sm-5 col-auto"
-                  aria-label=".form-select-sm example"
-                  onChange={props.handleSelectTopicChange}
-                  placeholder={props.topicChange}
-
-                  // editable
-                  // style={{ color: prevColor }}
-                >
-                  <option
-                    // key="Choose ONE"
-                    label={props.topicChange}
-                    onChange={props.handleSelectTopicChange}
-                    // style={{color:"red"}}
-                    value={props.topicChange}
-                    name="choose"
-                    // style={{ color: prevColor }}
-                    className="col-6"
-                  ></option>
-                  {props.topics.map((topic) => {
-                    return (
-                      <option
-                        key={topic.topicId}
-                        label={
-                          props.topicChange ? topic.topicId : topic.topicName
-                        }
-                        placeholder={topic.topicId}
-                        name="choose"
-                        onChange={props.handleSelectTopicChange}
-                        // style={{color:"black"}}
-                      >
-                        {/* {exam.examName}
-                      </option>
-                    );
-                  })}
-                </select> */}
                 <Combobox
                   name="topicId"
                   data={props.topics}
                   dataKey="topicId"
                   textField="topicName"
-                  // defaultValue={0}
-                  // value={props.topicChange}
                   onChange={(value) => props.handleSelectTopicChange(value)}
                   defaultValue={props.topicId ? props.topicId : "Choose ONE"}
                 />

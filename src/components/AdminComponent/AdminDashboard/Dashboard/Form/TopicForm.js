@@ -20,7 +20,6 @@ export default function TopicForm(props) {
           <input
             type="text"
             name="topicName"
-            // value={props.topicName}
             className="form-control mx-sm-3"
             defaultValue={props.topicName}
             onChange={(value)=>props.changeHandler(value)}

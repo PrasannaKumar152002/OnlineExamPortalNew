@@ -3,24 +3,41 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import Exam from "./ExamComponent/Exam";
-import Student from "./StudentList/Student/Student";
-import AddQuestion from "./ExamComponent/AddQuestion/AddQuestion";
-import ViewQuestion from "./ExamComponent/ViewQuestion/ViewQuestion";
-import Details from "./ExamComponent/DetailComponent/Details";
 import StudentList from "./StudentList/StudentList";
-import Result from "./ResultComponent/Result";
 import Question from "./QuestionComponent/Question";
 import Dashboard from "./Dashboard/Dashboard";
 import ExamTopicMapping from "./ExamComponent/ExamTopicMapping/ExamTopicMapping";
 import Logo from "../../../components/image/exam3.png";
 import Topic from "./SubjectComponent/Topic";
+import LogOut from "../../../page/LogOut";
+import { useEffect, useState } from "react";
+import UserExamMappingForm from "./Dashboard/Form/UserExamMappingForm";
 
 function AdminDashboard() {
-  // let history = useNavigate();
+  const [students, setStudents] = useState([]);
+  useEffect(() => {
+    async function getAllStudent() {
+      try {
+        const response = await fetch(
+          "https://localhost:8443/OnlineExamPortal/control/FetchStudentDetails",
+          {
+            credentials: "include",
+          }
+        );
+        if (!response.ok) {
+          throw new Error();
+        }
+        const data = await response.json();
+        console.log(data);
+        var list = data.StudentList;
+        setStudents([...list]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAllStudent();
+  }, []);
 
-  // function goToAdminLogin() {
-  //     history("/AdminLogin");
-  // }
 
   return (
     <>
@@ -28,8 +45,7 @@ function AdminDashboard() {
         <Navbar
           collapseOnSelect
           expand="lg"
-          className="bg-body-tertiary d-flex justify-content-center mw-100" 
-          // style={{background: "linearGradient(to top, #09203f 0%, #537895 100%)"}}
+          className="bg-body-tertiary d-flex justify-content-center mw-100"
           bg="dark"
           data-bs-theme="dark"
         >
@@ -122,29 +138,6 @@ function AdminDashboard() {
                   <Nav.Link className="me-auto d-flex justify-content-center w-100 nav-item">
                     <Link
                       exact
-                      to="/AdminDashboard/Result"
-                      style={{ textDecoration: "none" }}
-                      className="nav-link text-light bg-dark"
-                    >
-                      <li role="presentation">
-                        {" "}
-                        <span
-                          id="result-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#result"
-                          type="button"
-                          role="tab"
-                          aria-controls="result"
-                          aria-selected="false"
-                        >
-                          Result{" "}
-                        </span>
-                      </li>
-                    </Link>
-                  </Nav.Link>
-                  <Nav.Link className="me-auto d-flex justify-content-center w-100 nav-item">
-                    <Link
-                      exact
                       to="/AdminDashboard/StudentList"
                       style={{ textDecoration: "none" }}
                       className="nav-link text-light bg-dark"
@@ -188,6 +181,9 @@ function AdminDashboard() {
                         </span>{" "}
                       </li>
                     </Link>
+                    <Link to="/logout" className='nav-link text-light bg-dark ml-3' style={{ textDecoration: "none", }}>
+                      <i className='bi bi-power'></i> Logout
+                    </Link>
                   </Nav.Link>
                 </ul>
               </Nav>
@@ -212,40 +208,19 @@ function AdminDashboard() {
             ></Route>
             <Route
               exact
-              path="/AdminDashboard/Result"
-              element={<Result />}
-            ></Route>
-            <Route
-              exact
               path="/AdminDashboard/StudentList"
               element={<StudentList />}
-            ></Route>
-
-            <Route
-              exact
-              path="/AdminDashboard/Exam/Details/:id"
-              element={<Details />}
-            ></Route>
-            <Route
-              exact
-              path="/AdminDashboard/Exam/ViewQuestion/:id"
-              element={<ViewQuestion />}
-            ></Route>
-            <Route
-              exact
-              path="/AdminDashboard/Exam/AddQuestion/:id/:total"
-              element={<AddQuestion />}
-            ></Route>
-
-            <Route
-              exact
-              path="/AdminDashboard/StudentList/Details/:id/:total"
-              element={<Student />}
             ></Route>
             <Route
               exact
               path="/ExamComponent/ExamTopicMapping"
               element={<ExamTopicMapping />}
+            ></Route>
+            <Route path="/logout" element={<LogOut/>} />
+            <Route
+              exact
+              path="/AdminDashboard/StudentList/AddUser"
+              element={<UserExamMappingForm students={students}/>}
             ></Route>
           </Routes>
         </div>

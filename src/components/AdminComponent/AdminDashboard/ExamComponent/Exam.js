@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import axios from "axios";
 
 import { Link } from "react-router-dom";
 
@@ -8,7 +7,6 @@ import ExamForm from "../Dashboard/Form/ExamForm";
 import ExamModalEditSample from "../Modal/Edit/ExamModalEditSample";
 
 function Exam() {
-  //  ---------------------- add Exam & close buttton working  -------------------------------------
   const [display, setDisplay] = useState({
     display: "none",
   });
@@ -22,18 +20,14 @@ function Exam() {
     setDisplay({ display: "none" });
   }
 
-  // --------------- Fetching all Exam from db.json file-------------------------
-
   const [exams, setExams] = useState([]);
   const option = [
     {
       id: 0,
-      // value: "Yes",
       display:"Y"
     },
     {
       id: 1,
-      // value: "No",
       display:"N"
     },
   ];
@@ -56,67 +50,54 @@ function Exam() {
 
   const changeQuesRandHandler = (e) => {
     setChangedQuesRandoptions(e.display);
-    console.log(e.display);
   };
 
   const changeNegMarkHandler = (e) => {
     setChangednegativeMarkValue(e.target.value);
-    console.log(e.target.value);
   };
 
   const changePassPercentHandler = (e) => {
     setChangedpassPercentage(e.target.value);
-    console.log(e.target.value);
   };
 
   const changeEnableAnsMustHandler = (e) => {
     setChangedanswersMust(e.display);
-    console.log(e.display);
   };
 
   const changeEnableNegMarkHandler = (e) => {
     setChangedenableNegativeMark(e.display);
-    console.log(e.display);
   };
 
   const changeQuesHandler = (e) => {
     setChangednoOfQuestions(e.target.value);
-    console.log(e.target.value);
   };
 
   const changeDurationHandler = (e) => {
     setChangeddurationMinutes(e.target.value);
-    console.log(e.target.value);
   };
 
   const changeCreateDateHandler = (e) => {
     setChangedcreationDate(e.target.value);
-    console.log(e.target.value);
   };
 
   const changeExpireDateHandler = (e) => {
     setChangedexpirationDate(e.target.value);
-    console.log(e.target.value);
   };
 
   const changeDescHandler = (e) => {
     setChangedDesc(e.target.value);
-    console.log(e.target.value);
   };
 
   const changeExamNameHandler = (e) => {
     setChangedexamName(e.target.value);
-    console.log(e.target.value);
   };
-
-  // --------------------Adding Exam And re-render Exam component-----------------
 
   const fetchExam = async () => {
     try {
       const response = await fetch(
         "https://localhost:8443/OnlineExamPortal/control/FetchExamMaster",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -130,69 +111,12 @@ function Exam() {
       console.log(error);
     }
   };
-  // console.log("''''''''''''''''''''''''''''''''''''''");
-  // console.log(exams);
-  // var date = new Date();
-  // var d =
-  //   date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-  // var t = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-
-  // const [exam, setExam] = useState({
-  //   exam_name: "",
-  //   exam_desc: "",
-  //   exam_level: "",
-  //   exam_passMarks: "",
-  //   exam_totalQuestion: "",
-  //   exam_marks: "",
-  //   exam_date: d + " " + t,
-  // });
-
-  // function handleInput(e) {
-  //   setExam({
-  //     ...exam,
-  //     [e.target.name]: e.target.value,
-  //   });
-  //   //  console.log(exam);
-  // }
-
-  // async function handleAddNewExam() {
-  //   await axios.post("http://localhost:3333/Exam", exam);
-  //   setStatus(true);
-  // }
-
-  // const [status, setStatus] = useState();
-
-  // ----------------------------Deleting Exam-----------------------------------------------
-
-  // const [questions, setQuestions] = useState([]);
-
-  // useEffect(() => {}, []);
-
-  // const [statusDeleteExam, setStatusDeleteExam] = useState();
-
-  // async function deleteExam(id) {
-  //    console.log(id);
-
-  //   for (let i = 0; i < questions.length; i++) {
-  //     if (parseInt(questions[i].exam_id) === parseInt(id)) {
-  //       // console.log(questions[i].id);
-  //       await axios.delete(http://localhost:3333/question/${questions[i].id});
-  //     }
-  //   }
-  //   await axios.delete(http://localhost:3333/exam/${id});
-  //   setStatusDeleteExam(true);
-  // }
-
-  // if (status) return <Exam total={exam.exam_totalQuestion} />;
-
-  // if (statusDeleteExam) return <Exam />;
-
+  
   const submitHandler = (e) => {
     e.preventDefault();
     var form = document.getElementById("exam");
     const formData = new FormData(form);
     const data_map = {
-      // examId: formData.get("examId"),
       examName: formData.get("examName"),
       description: formData.get("description"),
       creationDate: formData.get("creationDate"),
@@ -286,7 +210,7 @@ function Exam() {
         body: JSON.stringify(data_map),
       })
         .then((response) => {
-          return response.json(); //  converts the response object to JSON to info
+          return response.json();
         })
         .then((fetch_data) => {
           console.log(fetch_data);
@@ -386,8 +310,18 @@ function Exam() {
                       examName={exam.examName}
                       noOfQuestions={exam.noOfQuestions}
                       durationMinutes={exam.durationMinutes}
-                      creationDate={exam.creationDate}
-                      expirationDate={exam.expirationDate}
+                      creationDate={exam.creationDate
+                        .split(" ")
+                        .map((part, index) =>
+                          index === 1 ? `T${part.slice(0, 5)}` : part
+                        )
+                        .join("")}
+                      expirationDate={exam.expirationDate
+                        .split(" ")
+                        .map((part, index) =>
+                          index === 1 ? `T${part.slice(0, 5)}` : part
+                        )
+                        .join("")}
                       answersMust={exam.answersMust}
                       questionsRandomized={exam.questionsRandomized}
                       passPercentage={exam.passPercentage}
@@ -490,8 +424,5 @@ function Exam() {
     </>
   );
 }
-Exam.defaultProps = {
-  total: 0,
-};
 
 export default Exam;

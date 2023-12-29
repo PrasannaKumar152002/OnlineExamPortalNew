@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Header() {
   const [navCollapse, setNavCollapse] = useState(false);
-
+  var user=sessionStorage.getItem("userId");
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container'>
@@ -38,7 +36,7 @@ function Header() {
         </div>
 
         <h4 className='ml-auto' style={{ color: 'white', marginRight: 12, width:200 }}>
-          User Module
+          {user}
         </h4>
       </div>
     </nav>

@@ -5,7 +5,6 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import TopicModalEditSample from "../Modal/Edit/TopicModalEditSample";
 
 function Topic() {
-  //  ---------------------- add Subject & close buttton working  -------------------------------------
   const [display, setDisplay] = useState({
     display: "none",
   });
@@ -14,8 +13,6 @@ function Topic() {
 
   const changeHandler = (e) => {
     setChangedTopic(e.target.value);
-    console.log("***************************************************");
-    console.log(e.target.value);
   };
 
   function handleAddSubject() {
@@ -47,15 +44,9 @@ function Topic() {
           body: JSON.stringify(data_map),
         })
           .then((response) => {
-            return response.json(); //  converts the response object to JSON to info
+            return response.json(); 
           })
           .then((fetch_data) => {
-            // console.log(
-            //   "-------------------------------------------------------------------"
-            // );
-            // console.log(fetch_data.topicName);
-            // var addTopic = fetch_data.topicName;
-            // setTopics([...topics,addTopic]);
             console.log(fetch_data);
             fetchTopics();
           });
@@ -65,21 +56,18 @@ function Topic() {
     }
     form.reset();
   };
-  // --------------- Fetching all subjects from db.json file-------------------------
-  // const [exams, setExams] = useState([]);
 
   useEffect(() => {
     fetchTopics();
   }, []);
 
-  // --------------------Adding Exam And re-render Exam component-----------------
 
   const fetchTopics = async () => {
     try {
       const response = await fetch(
         "https://localhost:8443/OnlineExamPortal/control/FetchTopicMaster",
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
         }
       );
@@ -94,7 +82,6 @@ function Topic() {
       console.log(error);
     }
   };
-  console.log("''''''''''''''''''''''''''''''''''''''");
   console.log(topics);
 
   const handleDeleteTopic = async (id) => {
@@ -162,13 +149,7 @@ function Topic() {
                     <tr key={i}>
                       <td>{data.topicId}</td>
                       <td>{data.topicName}</td>
-                      {/*  style={{background:"none", backgroundColor:"none"}} */}
                       <td
-                      // onClick={() => handleEditTopic(data)}
-
-                      // onClick={handleShow}
-                      // style={{ fontWeight: "bolder",background: "radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%)" }}
-                      // className="border-none px-3 py-1 mt-4 mb-2 text-white rounded-0"
                       >
                         <TopicModalEditSample
                           type="button"
@@ -207,9 +188,6 @@ function Topic() {
             Add Topic
           </button>
         </div>
-
-        {/* Add Subject */}
-
         <div style={display}>
           <div className="d-flex justify-content-center min-vh-2 text-black">
             <TopicForm
@@ -222,7 +200,6 @@ function Topic() {
             />
           </div>
         </div>
-        {/* <div>{updateTopics && <TopicForm />} </div> */}
       </div>
     </>
   );

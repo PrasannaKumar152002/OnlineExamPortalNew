@@ -1,13 +1,10 @@
-import { data, error } from 'jquery';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
-// import './style2.module.css';
-import $ from 'jquery';
 import Swal from 'sweetalert2';
-import FontAwesomeIcon from 'react-fontawesome';
 
 function Field({ change, title, rolestate }) {
+    var username=null;
     var element = null;
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -16,7 +13,7 @@ function Field({ change, title, rolestate }) {
     });
     const nav = useNavigate();
     var loginandvalidation = (e) => {
-        // e.preventdefault();
+        e.preventDefault();
         console.log("entered validation");
         var form = document.getElementById("accesspanel");
         const formData1 = new FormData(form);
@@ -31,7 +28,6 @@ function Field({ change, title, rolestate }) {
         console.log(email + " " + password);
         if (email === "") {
             console.log("email is not null");
-            // document.getElementById('error2').innerHTML = "";
             document.getElementById('error1').innerHTML = erroremail;
             document.getElementById('exampleInputEmail1').style.borderColor = 'red';
         }
@@ -43,7 +39,6 @@ function Field({ change, title, rolestate }) {
             console.log(errorpassword);
             document.getElementById('error2').innerHTML = errorpassword;
             document.getElementById('exampleInputPassword1').style.borderColor = 'red';
-            // document.getElementById('error1').innerHTML = "";
         }
         else {
             document.getElementById('error2').innerHTML = "";
@@ -57,18 +52,17 @@ function Field({ change, title, rolestate }) {
                 if (passregex.test(password)) {
                     document.getElementById('error2').innerHTML = '';
                     document.getElementById('exampleInputPassword1').style.borderColor = 'black';
+                    username=email;
                     login(map);
                 }
                 else {
                     document.getElementById('error2').innerHTML = 'Invalid Password type';
                     document.getElementById('exampleInputPassword1').style.borderColor = 'red';
-                    // element.innerHTML = "Invalid password type";
                 }
             }
             else {
                 document.getElementById('error1').innerHTML = 'Invalid Email type';
                 document.getElementById('exampleInputEmail1').style.borderColor = 'red';
-                // element.innerHTML = "Invalid Email type";
             }
 
         }
@@ -84,20 +78,19 @@ function Field({ change, title, rolestate }) {
             headers: {
                 'Content-type': 'application/json'
             },
+            credentials:'include',
             body: JSON.stringify(add)
 
         }).then(response => response.json()).then(data => {
             setLoading(false);
             console.log(data.result);
             if (data.result == "error") {
-                // element.innerHTML = "Incorrect Email or Password";
                 Swal.fire({
                     icon: "error",
                     title: "Validation Error",
                     text: "Incorrect Email or Password",
                     footer: "Error from the backend"
                 });
-                // alert("Incorrect Email or Password");
             }
             else if (data.result == "HelperError") {
 
@@ -108,34 +101,28 @@ function Field({ change, title, rolestate }) {
                         text: "Invalid Email or Password type",
                         footer: "Error from the backend"
                     });
-                    // element.innerHTML = "Invalid Email and Password type";
-                    // alert("Invalid Email and Password type");
                 }
                 else if (data.username != undefined) {
-                    // element.innerHTML = data.username;
                     Swal.fire({
                         icon: "error",
                         title: "Type Error",
                         text: "Invalid Email type",
                         footer: "Error from the backend"
                     });
-                    // alert(data.username);
                 }
                 else if (data.password != undefined) {
-                    // element.innerHTML = data.password;
                     Swal.fire({
                         icon: "error",
                         title: "Type Error",
                         text: "Invalid Password type",
                         footer: "Error from the backend"
                     });
-                    // alert(data.password);
                 }
 
             }
             else {
-                // element.innerHTML="Login success";
-                // alert("Login success");
+              
+                sessionStorage.setItem("userId",username);
                 Swal.fire({
                     icon: "success",
                     title: "Welcome",
@@ -153,7 +140,6 @@ function Field({ change, title, rolestate }) {
             }
         }).catch(error => {
             setLoading(false);
-            // Handle any errors that occurred during the fetch
             console.error('Fetch error:', error);
             Swal.fire({
                 icon: "error",
@@ -162,7 +148,6 @@ function Field({ change, title, rolestate }) {
                 footer: error
             });
         })
-        //document.getElementById("sumbit").reset();
     }
     const [geteye, seteye] = useState(false);
     var eye = () => {

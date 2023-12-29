@@ -1,20 +1,14 @@
-import { timeline } from 'animejs';
-import { data, error } from 'jquery';
-import $ from 'jquery'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Tooltip } from 'react-bootstrap';
 import { OverlayTrigger } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 
 
 function Register({ change, title }) {
     var element = null;
     var email=null;
     useEffect(() => {
-        // element = document.getElementById("success");
-        // console.log(element);
     });
     const nav = useNavigate();
     var loginandvalidation = () => {
@@ -41,7 +35,6 @@ function Register({ change, title }) {
         let errorcpass = "please enter the confirmpassword";
         console.log(email + " " + password);
         if (email === "") {
-            // console.log("email is not null");
             console.log(erroremail);
             document.getElementById('error1').innerHTML = erroremail;
             document.getElementById('exampleInputEmail1').style.borderColor = 'red';
@@ -97,7 +90,7 @@ function Register({ change, title }) {
                 document.getElementById('error5').innerHTML = "";
                 document.getElementById('exampleInputCPassword1').style.borderColor = 'black';
                 let mailregex = /^[A-Za-z0-9+_.-]+@(.+)$/;
-                let passregex = /^.{5,}/;
+                let passregex = /^.{8,}/;
                 if (mailregex.test(email)) {
                     document.getElementById('error1').innerHTML = "";
                     document.getElementById('exampleInputEmail1').style.borderColor = 'black';
@@ -109,18 +102,15 @@ function Register({ change, title }) {
                     else {
                         document.getElementById('error4').innerHTML = "Invalid password type";
                         document.getElementById('exampleInputPassword1').style.borderColor = 'red';
-                        // element.innerHTML = "Invalid password type";
                     }
                 }
                 else {
                     document.getElementById('error1').innerHTML = "Invalid Email type";
-                    // element.innerHTML = "Invalid Email type";
                     document.getElementById('exampleInputEmail1').style.borderColor = 'red';
                 }
             }
             else {
                 document.getElementById('error5').innerHTML = "Password and Conformpassword field does't match";
-                // element.innerHTML = "Password and Conformpassword field does't match";
                 document.getElementById('exampleInputCPassword1').style.borderColor = 'red';
             }
 
@@ -141,14 +131,12 @@ function Register({ change, title }) {
         }).then(response => response.json()).then(data => {
             console.log(data.result);
             if (data.result === "error") {
-                // element.innerHTML = "Incorrect Email or Password";
                 Swal.fire({
                     icon: "error",
                     title: "Validation Error",
                     text: "Incorrect Email or Password",
                     footer: "Error from the backend"
                 });
-                // alert("Incorrect Email or Password");
             }
             else if (data.result === "HelperError") {
 
@@ -159,28 +147,22 @@ function Register({ change, title }) {
                         text: "Invalid Email or Password type",
                         footer: "Error from the backend"
                     });
-                    // element.innerHTML = "Invalid Email and Password type";
-                    // alert("Invalid Email and Password type");
                 }
                 else if (data.username != undefined) {
-                    // element.innerHTML = data.username;
                     Swal.fire({
                         icon: "error",
                         title: "Type Error",
                         text: "Invalid Email type",
                         footer: "Error from the backend"
                     });
-                    // alert(data.username);
                 }
                 else if (data.password != undefined) {
-                    // element.innerHTML = data.password;
                     Swal.fire({
                         icon: "error",
                         title: "Type Error",
                         text: "Invalid Password type",
                         footer: "Error from the backend"
                     });
-                    // alert(data.password);
                 }
             }
             else {
@@ -194,8 +176,6 @@ function Register({ change, title }) {
                     });
                 }
                 else {
-                    // document.getElementById("success").innerHTML = "Registration success";
-                    // element.style.color = "green";
                     Swal.fire({
                         icon: "success",
                         title: "Registration Success",
@@ -209,12 +189,8 @@ function Register({ change, title }) {
                 document.getElementById("exampleInputLastName1").value = "";
                 document.getElementById("exampleInputPassword1").value = "";
                 document.getElementById("exampleInputCPassword1").value = "";
-                // element.style.color = "green";
-                // alert("Login success");
-
             }
         }).catch(error => {
-            // Handle any errors that occurred during the fetch
             console.error('Fetch error:', error);
             Swal.fire({
                 icon: "error",
@@ -223,7 +199,6 @@ function Register({ change, title }) {
                 footer: error
             });
         })
-        //document.getElementById("sumbit").reset();
     }
     const [geteye, seteye] = useState(false);
     var eye = () => {
@@ -253,9 +228,6 @@ function Register({ change, title }) {
             document.getElementById("ceyepic").style.width = "30px";
         }
     }
-    // $(function () {
-    //     $('[data-toggle="tooltip"]').tooltip()
-    // })
     return (
         <div className='container-fluid mt-4'>
             <form className='mx-auto row field' id='accesspanel' style={{ width: 600, marginTop: -2 }} onSubmit={loginandvalidation} >
@@ -287,7 +259,7 @@ function Register({ change, title }) {
                             placement="top"
                             overlay={
                                 <Tooltip id={`tooltip-top`}>
-                                    Password must contain alteast <strong>5 letters</strong>
+                                    Password must contain alteast <strong>8 letters</strong>
                                 </Tooltip>
                             }
                         >
@@ -303,13 +275,12 @@ function Register({ change, title }) {
                             placement="top"
                             overlay={
                                 <Tooltip id={`tooltip-top`}>
-                                    Password must contain alteast <strong>5 letters</strong>
+                                    Password must contain alteast <strong>8 letters</strong>
                                 </Tooltip>
                             }
                         >
                             <input type="password" className="form-control" id="exampleInputCPassword1" name='confirmpassword' />
 
-                            {/* <img style={{ marginTop: -115, marginLeft: 230, width:30,height:30,cursor:"help"}} src='tooltip.png' /> */}
                         </OverlayTrigger>
                     }<span className='eye'><img id='ceyepic' src='eye.png' style={{ width: 30, marginTop: -65, marginLeft: 190 }} onClick={ceye} /></span>
                     <p id='error5' style={{ color: 'red', marginTop: -20 }}></p>

@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { Combobox } from "react-widgets";
 
 export default function ExamTopicMappingForm(props) {
-  console.log("**********************************************************8")
-  console.log(props.examId);
   return (
     <div>
       <form
@@ -25,13 +23,12 @@ export default function ExamTopicMappingForm(props) {
               </label>
               <div className="col col-sm-7">
                 <Combobox
+                name="examIDerr"
                   data={props.exams}
                   dataKey="examId"
                   textField="examName"
                   defaultValue={props.examId ? props.examId : "Choose ONE"}
-                  // value={props.topicChange}
-                  onChange={(value) => props.handleSelectTopicChange(value)}
-                  // placeholder={props.topicId ? props.topicId : "Choose ONE"}
+                  onChange={(value) => props.handleSelectExamChange(value)}
                 />
                 <div className="invalid-feedback mx-sm-5" id="examIDerr">
                   Please Choose Exam Name
@@ -52,9 +49,7 @@ export default function ExamTopicMappingForm(props) {
                   dataKey="topicId"
                   textField="topicName"
                   defaultValue={props.topicId ? props.topicId : "Choose ONE"}
-                  // value={props.topicChange}
                   onChange={(value) => props.handleSelectTopicChange(value)}
-                  // placeholder={props.topicId ? props.topicId : "Choose ONE"}
                 />
                 <div className="invalid-feedback mx-sm-5" id="topicIDerr">
                   Please Choose Topic Name
@@ -75,6 +70,7 @@ export default function ExamTopicMappingForm(props) {
                   name="percentage"
                   className="form-control mx-sm-5"
                   defaultValue={props.percentage}
+                  onChange={(value)=>props.handleChangePercentage(value)}
                 />
                 <div className="invalid-feedback mx-sm-5" id="percentageerr">
                   Please Enter Percentage
@@ -117,10 +113,8 @@ export default function ExamTopicMappingForm(props) {
                   type="text"
                   name="questionsPerExam"
                   className="form-control mx-sm-5"
-                  defaultValue={props.count}
-                  // value={props.topicChange}
+                  defaultValue={props.selectedQuestionsPerExam}
                   onChange={(value) => props.handleSelectCountChange(value)}
-                  // placeholder={props.topicId ? props.topicId : "Choose ONE"}
                 />
                 <div
                   className="invalid-feedback mx-sm-5"

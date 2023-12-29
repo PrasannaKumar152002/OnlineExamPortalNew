@@ -9,7 +9,6 @@ function ExamTopicMappingModalSample(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log("ModalEM:" + props.examId);
 
   return (
     <>
@@ -32,9 +31,7 @@ function ExamTopicMappingModalSample(props) {
         backdrop="static"
         keyboard={false}
         fullscreen={true}
-        // className='w-100'
       >
-        {/*  */}
         <Modal.Header closeButton>
           <Modal.Title>Edit Exam Form</Modal.Title>
         </Modal.Header>
@@ -55,12 +52,6 @@ function ExamTopicMappingModalSample(props) {
             count={props.count}
           />
         </Modal.Body>
-        {/* <Modal.Footer className='text-center'>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          {/* <Button variant="primary">Understood</Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );
